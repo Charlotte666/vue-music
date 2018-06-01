@@ -14,6 +14,7 @@ import Type from 'components/type/type'
 import TypeAllKey from 'components/type-all-key/type-all-key'
 import TypeSong from 'components/type-song/type-song'
 import NewSong from 'components/new-song/new-song'
+import AlbumDetail from 'components/album-detail/album-detail'
 
 
 
@@ -49,6 +50,10 @@ export default new Router({
         {
           path: ':disstid1/:disstid2', 
           component: NewSong
+        },
+        {
+          path: 'album/detail/:albummid', 
+          component: AlbumDetail
         }
       ]
     },{

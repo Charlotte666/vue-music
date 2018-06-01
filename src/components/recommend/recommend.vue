@@ -75,7 +75,7 @@
               <i class="new-icon-right" @click="toType"></i>
             </div>
           </div>
-          <recommend-album :items="newAlbumList" @select="selectItem"></recommend-album>
+          <recommend-album :items="newAlbumList" @select="toAlbum"></recommend-album>
         </div>
       <div class="loading-container" v-show="!discList.length">
         <loading></loading>
@@ -126,6 +126,11 @@ export default {
       })
       this.setDisc(item)
     },
+    toAlbum(item){
+      this.$router.push({
+        path: `/appShow/recommend/album/detail/${item.album_mid}`
+      })
+    },
      handlePlaylist(playlist){
           const bottom = playlist.length > 0 ? '60px' : '' //播放器高度加上原有bottom 等于148
           this.$refs.recommend.style.bottom = bottom
@@ -162,6 +167,7 @@ export default {
          getNewList(2,0,1).then((res) => {
               if(res.code === ERR_OK){
                 this.newAlbumList = res.new_album.data.list.slice(0,6) // 截取前6个元素
+                console.log(this.newAlbumList)
               }
           })
       },
