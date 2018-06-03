@@ -14,7 +14,8 @@ const state = {
     searchHistory: loadSearch(),
     playHistory: loadPlay(),
     favoriteList: loadFavorite(),
-    newSongRefsh:-1 //控制new-song页面刷新
+    newSongRefsh:-1, //控制new-song页面刷新
+    albumDesc:{} //专辑简介对象
 }
 
 export default state

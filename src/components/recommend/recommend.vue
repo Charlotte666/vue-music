@@ -167,7 +167,6 @@ export default {
          getNewList(2,0,1).then((res) => {
               if(res.code === ERR_OK){
                 this.newAlbumList = res.new_album.data.list.slice(0,6) // 截取前6个元素
-                console.log(this.newAlbumList)
               }
           })
       },

@@ -26,5 +26,7 @@ export const SET_FAVORITE_LIST = 'SET_FAVORITE_LIST'
 
 export const SET_NEW_SONG_REFSH = 'SET_NEW_SONG_REFSH'
 
+export const SET_ALBUM_DESC = 'SET_ALBUM_DESC'
+
 
 

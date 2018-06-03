@@ -30,3 +30,6 @@ export const favoriteList = state => state.favoriteList
 
 export const newSongRefsh = state => state.newSongRefsh
 
+export const albumDesc = state => state.albumDesc
+
+

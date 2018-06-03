@@ -15,6 +15,7 @@ import TypeAllKey from 'components/type-all-key/type-all-key'
 import TypeSong from 'components/type-song/type-song'
 import NewSong from 'components/new-song/new-song'
 import AlbumDetail from 'components/album-detail/album-detail'
+import AlbumDetailDesc from 'components/album-detail-desc/album-detail-desc'
 
 
 
@@ -53,7 +54,17 @@ export default new Router({
         },
         {
           path: 'album/detail/:albummid', 
-          component: AlbumDetail
+          component: AlbumDetail,
+          // children:[
+          //   {
+          //     path:':albummid1',
+          //     component:AlbumDetailDesc
+          //   }
+          // ]
+        },
+        {
+          path: 'album/desc/info', 
+          component: AlbumDetailDesc,
         }
       ]
     },{

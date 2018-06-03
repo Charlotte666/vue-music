@@ -42,6 +42,9 @@ const mutations = {
       },
       [types.SET_NEW_SONG_REFSH](state,newstate) {
         state.newSongRefsh = newstate
+      },
+      [types.SET_ALBUM_DESC](state,desc) {
+        state.albumDesc = desc
       }
 }
 
