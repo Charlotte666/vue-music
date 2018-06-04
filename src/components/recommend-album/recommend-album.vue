@@ -53,10 +53,12 @@
         .text
           font-size: $font-size-small
           .desc
+            no-wrap()
             color: $color-text
             margin-bottom :10px
             line-height: 18px
           .name
+            no-wrap()
             color: $color-text-d
             margin-bottom :20px
 </style>

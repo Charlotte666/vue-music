@@ -164,7 +164,7 @@ export default {
               }
           })
           // 最新专辑
-         getNewList(2,0,1).then((res) => {
+         getNewList(2,0,7).then((res) => {
               if(res.code === ERR_OK){
                 this.newAlbumList = res.new_album.data.list.slice(0,6) // 截取前6个元素
               }

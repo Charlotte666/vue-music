@@ -9,15 +9,15 @@
         </div>
         <span class="adate">{{data.aDate}}</span>
         <div class="image-bg" >
-              <img class="image" width="125px" height="125px" v-lazy="`https://y.gtimg.cn/music/photo_new/T002R300x300M000${this.$route.params.albummid}.jpg?max_age=2592000`"/>
-              <div class="diss">
+              <img class="image" width="125px" height="125px" v-lazy="`https://y.gtimg.cn/music/photo_new/T002R300x300M000${this.$route.params.albummid}.jpg?max_age=2592000`" />
+              <div class="diss" :style="computWidth">
                   <span class="albumname">{{data.name}}</span>
                   <div class="avatar-wrapper">
-                    <img class="avatar" v-lazy="`https://y.gtimg.cn/music/photo_new/T001R300x300M000${data.singermid}.jpg?max_age=2592000`">
+                    <img class="avatar" v-lazy="`https://y.gtimg.cn/music/photo_new/T001R300x300M000${data.singermid}.jpg?max_age=2592000`" v-show="data.singermid">
                     <span class="singername">{{data.singername}}</span>
                   </div>
                   <div class="desc" @click="todesc">
-                    <span class="info" :style="computWidth">简介：{{data.desc}}</span>
+                    <span class="info">简介：{{data.desc}}</span>
                     <i class="new-icon-rightarrow"></i>
                   </div>
               </div>
@@ -39,7 +39,7 @@
     },
     computed:{
       computWidth(){
-         return 'width:'+(window.innerWidth/2)+'px'
+         return 'width:'+(window.innerWidth/1.8)+'px'
       },
       bgStyle(){
         return 'background:' + getColor(this.data.color)
@@ -68,19 +68,6 @@
     },
     created(){
         this._getAlbumDetail(this.$route.params.albummid)
-    //     var value = parseInt(-val);  
-    //     var val = 0xff000000 | value;  
-    //     val = val.toString(16).substring(1);  
-    //     var str = '';  
-    //     //当返回的颜色值没有达到六位时  
-    //     if (val.length < 6) {  
-    //         var i = 6 - val.length;  
-    //         for (var t = 0; t < i; t++) {  
-    //             str += '0';  
-    //         }  
-    //     }  
-    //     console.log('color:' + '#' + str + val);
-    // }
     }
   }
 </script>
@@ -140,6 +127,7 @@
         flex-direction :column
         margin-top :15px
         .albumname
+          no-wrap()
           margin-bottom :15px
           font-size :$font-size-medium-xl
           color:$color-text
@@ -152,6 +140,7 @@
             height: 30px
             border-radius: 50%
           .singername
+            no-wrap()
             margin-left :8px
             font-size :$font-size-medium-s
             color:$color-text

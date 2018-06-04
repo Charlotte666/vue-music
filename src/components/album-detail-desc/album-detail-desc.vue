@@ -7,7 +7,7 @@
       <scroll class="desclist" ref="scroll" :data="albumDesc.list" >
         <div>
           <div class="image">
-            <img width="185px" height="190px" @load="loadImage" v-lazy="`https://y.gtimg.cn/music/photo_new/T002R300x300M000${albumDesc.mid}.jpg?max_age=2592000`"/>
+            <img width="185px" height="190px" v-lazy="`https://y.gtimg.cn/music/photo_new/T002R300x300M000${albumDesc.mid}.jpg?max_age=2592000`"/>
           </div>
           <div class="desc">
             <span class="albumname" >专辑：{{albumDesc.name}}</span>
