@@ -15,7 +15,7 @@
       </tab>
       <swiper v-model="index" :height="computHeight" :show-dots="false">
         <swiper-item v-for="(item, index) in list" :key="index" >
-            <scroll :data="changeData(index)" class="list" ref="list">
+            <scroll :data="changeData(index)" :probe-type="probeType" :listen-scroll="listenScroll" class="list" ref="list">
               <div class="song-list-wrapper">
                   <song-list :songs="changeData(index)"></song-list>
               </div>
@@ -66,6 +66,8 @@
      created(){
        this.disstid1 = this.$route.params.disstid1 //最新
        this.disstid2 = this.$route.params.disstid2 //推荐
+       this.probeType = 3 //better-scroll的probeType属性默认是1,如果想要在scroll快速滚动的时候,正确的监听scroll,需把该属性设置为3。
+       this.listenScroll = true
        this._getSongList()
      },
       methods:{
