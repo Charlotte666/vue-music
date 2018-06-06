@@ -105,6 +105,7 @@ import Scroll from 'base/scroll/scroll'
         margin-left :30px
         margin-right :30px
         .albumname
+          no-wrap()
           margin-bottom :10px
         .lan
           margin-bottom :10px

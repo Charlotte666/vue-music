@@ -9,6 +9,7 @@
              <span class="incount">{{Math.round(inCount[index]*100)}}%</span>
           </div>
         </div>
+        <span class="index" v-text="getIndexText(index)" v-show="!rank"></span>
         <div class="content">
           <h2 class="name">{{song.name}}</h2>
           <p class="desc">{{getDesc(song)}}</p>
@@ -53,6 +54,9 @@
         if (index > 2) {
           return index + 1
         }
+      },
+      getIndexText(index){
+        return index + 1
       }
     }
   }
@@ -99,6 +103,12 @@
         .text
           color: $color-theme
           font-size: $font-size-large
+      .index
+        color: $color-theme
+        font-size: $font-size-large
+        text-align: center
+        margin-right :30px
+        width: 25px
       .content
         flex: 1
         line-height: 20px
