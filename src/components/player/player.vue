@@ -584,7 +584,7 @@ export default {
           .icon-back
             display: block
             padding: 9px
-            font-size: $font-size-large-x
+            font-size: $font-size-large-xl
             color: $color-theme
             transform: rotate(-90deg)
         .title

@@ -28,16 +28,16 @@
       data(){
           return{
               showFlag : true,
-              opacityStyle : {
+              opacityStyle : { // 透明度
                   opacity : 0
               }
           }
       },
       watch:{
+      //  监听scrollY位置变化 来实现header渐隐渐显效果
        scrollY(newVal){
-           let y = Math.abs(newVal)
-           if(y >= 15){
-             let opacity = y/145
+           if(newVal <= -15){
+             let opacity = Math.abs(newVal/145)
              opacity = opacity > 1 ? 1 : opacity
              this.opacityStyle = {
                  opacity : opacity

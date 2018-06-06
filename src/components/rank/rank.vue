@@ -123,7 +123,7 @@ export default {
       .icon-back
         display: block
         padding: 10px
-        font-size: $font-size-large-x
+        font-size: $font-size-large-xl
         color: $color-theme
     .toplist
       height: 100%

@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div id="album-detail">
+    <div id="album-detail" ref="album">
         <!-- <div class="m-header">
             <span class="albumTitle">专辑</span>
         </div> -->
@@ -25,7 +25,7 @@
                       </div>
                   </div>
             </div>
-            <div class="suiji">
+            <div class="suiji" v-show="!showFlag">
               <div class="button">
                   <i class="icon-play"></i>
                   <span class="text">随机播放</span>
@@ -47,6 +47,13 @@
              </div>
             </div>
           </scroll>
+          <div class="posButton" v-show="showFlag">
+              <div class="button">
+                  <i class="icon-play"></i>
+                  <span class="text">随机播放</span>
+                  <span class="count" >共{{list.length}}首</span>
+              </div>
+          </div>
           <div v-show="!list.length" class="loading-container">
               <loading></loading>
           </div>
@@ -65,14 +72,15 @@
   import {ERR_OK} from 'api/config'
   import {getAlbumDetail} from 'api/album'
   export default {
-    // mixins: [playlistMixin],
+    mixins: [playlistMixin],
     data(){
       return{
           data:{},
           list:[],
           scrollY:0,
           probeType:3,
-          listenScroll:true
+          listenScroll:true,
+          showFlag:false
       }
     },
     computed:{
@@ -87,11 +95,11 @@
       }
     },
     methods:{
-        // handlePlaylist(playlist){
-        //   const bottom = playlist.length > 0 ? '60px' : ''
-        //   this.$refs.list.$el.style.bottom = bottom
-        //   this.$refs.list.refresh()
-        // },
+        handlePlaylist(playlist){
+          const bottom = playlist.length > 0 ? '60px' : ''
+          this.$refs.album.style.bottom = bottom
+          this.$refs.list.refresh()
+        },
         back(){
           this.$router.back()
         },
@@ -109,15 +117,23 @@
             console.log(res)
                 this.data = res.data
                 this.list = res.data.list
-                this.$refs.list.refresh()
           })
         },
         scroll(pos){
-          this.scrollY =pos.y
+          this.scrollY = pos.y
         },
         ...mapMutations({
           setAlbumDesc:'SET_ALBUM_DESC'
         })
+    },
+    watch:{
+       scrollY(newVal){
+           if(newVal <= -188){
+             this.showFlag = true
+           }else{
+             this.showFlag = false
+           }
+       }
     },
     components: {
       Scroll,
@@ -164,7 +180,7 @@
       .icon-back
         display: block
         padding: 10px
-        font-size: $font-size-large-x
+        font-size: $font-size-large-xl
         color: $color-theme
     .scroll
       position: fixed
@@ -173,10 +189,14 @@
       bottom: 0
       right: 0
       overflow: hidden
+      // position: relative
+      // width: 100%
+      height: 100%
+      // overflow: hidden
       .adate
         z-index : 10
         position:absolute
-        top 108px
+        top 125px
         left 30px
       .image-bg
         display :flex
@@ -268,6 +288,29 @@
                   margin-top: 4px
                   color: $color-text-d
                   font-size: $font-size-small
+    .posButton
+      position: absolute
+      top: 40px
+      left: 0
+      width: 100%
+      display :flex
+      height:45px
+      z-index :105
+      background : $color-highlight-background
+      align-items :center
+      .button
+        display :flex
+        align-items :center
+        margin-left :15px
+        .icon-play
+          margin-right :5px
+          color:$color-theme
+        .text
+          color:$color-theme
+          margin-right :8px
+        .count
+          font-size :$font-size-small
+          color:$color-theme
     .loading-container
       position: absolute
       width: 100%
