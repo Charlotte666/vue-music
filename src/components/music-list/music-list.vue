@@ -7,8 +7,8 @@
       <div class="bg-image" :style="bgStyle" ref="bgImage">
        <div class="play-wrapper">
         <div ref="playBtn" v-show="songs.length>0" class="play" @click="random">
-          <i class="icon-play"></i>
-          <span class="text">随机播放全部</span>
+          <!-- <i class="icon-play"></i>
+          <span class="text">随机播放全部</span> -->
         </div>
        </div>
           <div class="filter" ref="filter"></div>
@@ -18,10 +18,18 @@
         <div class="song-list-wrapper">
             <song-list :rank="rank" :in-count="inCount" @select="selectItem" :songs="songs"></song-list>
         </div>
-        <div v-show="!songs.length" class="loading-container">
-          <loading></loading>
-        </div>
+        
       </scroll>
+      <div class="posButton" v-show="showFlag">
+          <div class="button">
+              <i class="icon-play"></i>
+              <span class="text">随机播放</span>
+              <span class="count" >共{{songs.length}}首</span>
+          </div>
+      </div>
+      <div v-show="!songs.length" class="loading-container">
+          <loading></loading>
+      </div>
   </div>
 </template>
 
@@ -73,12 +81,15 @@ export default {
     },
     data(){
         return {
-            scrollY : 0
+            scrollY : 0,
+            showFlag:false,
+            probeType:3,
+            listenScroll:true
         }
     },
     created(){
-        this.probeType = 3 //better-scroll的probeType属性默认是1,如果想要在scroll快速滚动的时候,正确的监听scroll,需把该属性设置为3。
-        this.listenScroll = true
+        // this.probeType = 3 //better-scroll的probeType属性默认是1,如果想要在scroll快速滚动的时候,正确的监听scroll,需把该属性设置为3。
+        // this.listenScroll = true
     },
     methods:{
         handlePlaylist(playlist){
@@ -115,6 +126,12 @@ export default {
     },
     watch:{
        scrollY(newVal){
+         console.log(newVal)
+        if(newVal <= -250){
+            this.showFlag = true
+          }else{
+            this.showFlag = false
+        }
         let translateY = Math.max(this.minTransalteY, newVal)
         let zIndex= 0
         let scale = 1
@@ -202,7 +219,7 @@ export default {
           padding: 7px 0
           margin: 0 auto
           text-align: center
-          border: 1px solid $color-theme
+          // border: 1px solid $color-theme
           color: $color-theme
           border-radius: 100px
           font-size: 0
@@ -232,11 +249,34 @@ export default {
       bottom: 0
       width: 100%
       background: $color-background
-      .song-list-wrapper
-        padding: 20px 30px
-      .loading-container
-        position: absolute
-        width: 100%
-        top: 50%
-        transform: translateY(-50%)
+      // .song-list-wrapper
+      //   padding: 20px 30px
+    .posButton
+      position: absolute
+      top: 39px
+      left: 0
+      width: 100%
+      display :flex
+      height:45px
+      z-index :105
+      background : $color-highlight-background
+      align-items :center
+      .button
+        display :flex
+        align-items :center
+        margin-left :15px
+        .icon-play
+          margin-right :5px
+          color:$color-theme
+        .text
+          color:$color-theme
+          margin-right :8px
+        .count
+          font-size :$font-size-small
+          color:$color-theme
+    .loading-container
+      position: absolute
+      width: 100%
+      top: 60%
+      transform: translateY(-50%)
 </style>

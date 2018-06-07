@@ -25,7 +25,7 @@
                       </div>
                   </div>
             </div>
-            <div class="suiji" v-show="!showFlag">
+            <div class="suiji">
               <div class="button">
                   <i class="icon-play"></i>
                   <span class="text">随机播放</span>
@@ -97,7 +97,7 @@
     methods:{
         handlePlaylist(playlist){
           const bottom = playlist.length > 0 ? '60px' : ''
-          this.$refs.album.style.bottom = bottom
+          this.$refs.list.$el.style.bottom = bottom
           this.$refs.list.refresh()
         },
         back(){
@@ -128,7 +128,7 @@
     },
     watch:{
        scrollY(newVal){
-           if(newVal <= -188){
+           if(newVal <= -185){
              this.showFlag = true
            }else{
              this.showFlag = false
@@ -164,14 +164,6 @@
     bottom:0
     right: 0
     background: $color-background
-    .m-header
-      height:30px
-      .albumTitle
-        display:flex
-        font-size: $font-size-large
-        color:$color-theme
-        justify-content :center
-        margin-top :10px
     .back
       position absolute
       top: 0
@@ -191,7 +183,7 @@
       overflow: hidden
       // position: relative
       // width: 100%
-      height: 100%
+      // height: 100%
       // overflow: hidden
       .adate
         z-index : 10
@@ -290,7 +282,7 @@
                   font-size: $font-size-small
     .posButton
       position: absolute
-      top: 40px
+      top: 39px
       left: 0
       width: 100%
       display :flex

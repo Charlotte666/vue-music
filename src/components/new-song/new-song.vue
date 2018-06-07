@@ -317,8 +317,8 @@
       height:90%
       overflow hidden
       background: $color-background
-      .song-list-wrapper
-        padding: 20px 30px
+      // .song-list-wrapper
+      //   padding: 20px 30px
       .loading-container
         position: absolute
         width: 100%
