@@ -2,8 +2,10 @@
   <div class="song-list">
     <div class="suiji">
       <div class="button">
-        <i class="icon-play"></i>
-        <span class="text">随机播放</span>
+        <div @click="random">
+          <i class="icon-play"></i>
+          <span class="text">随机播放</span>
+        </div>
         <span class="count" >共{{songs.length}}首</span>
       </div>
     </div>
@@ -46,6 +48,9 @@
     methods: {
       selectItem(item, index) {
         this.$emit('select', item, index)
+      },
+      random(){
+        this.$emit('random')
       },
       getDesc(song) {
         return `${song.singer}·${song.album}`
