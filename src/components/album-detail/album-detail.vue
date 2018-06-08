@@ -8,7 +8,7 @@
         <div class="back" @click="back">
             <i class="icon-back"></i>
         </div>
-        <scroll @scroll="scroll" :probe-type="probeType" :listen-scroll="listenScroll" :data="list" class="scroll" ref="list">
+        <scroll @scroll="scroll" :probe-type="probeType" :listen-scroll="listenScroll" :data="songs" class="scroll" ref="list">
           <div>
             <span class="adate" :style="colorStyle">{{data.aDate}}</span>
             <div class="image-bg" >
@@ -27,19 +27,21 @@
             </div>
             <div class="suiji">
               <div class="button">
+                <div class="random" @click="random">
                   <i class="icon-play"></i>
                   <span class="text">随机播放</span>
-                  <span class="count" >共{{list.length}}首</span>
+                </div>
+                  <span class="count" >共{{songs.length}}首</span>
               </div>
             </div>
             <div class="list">
                <ul class="song-list">
-                 <li class="item" v-for="(song, index) in list">
+                 <li class="item" v-for="(song, index) in songs" @click="selectItem(song,index)">
                     <div class="wrapper">
                       <span class="index" v-text="getRankText(index)"></span>
                       <div class="content">
-                        <h2 class="name">{{song.songname}}</h2>
-                        <p class="desc">{{song.singer[0].name}}</p>
+                        <h2 class="name">{{song.name}}</h2>
+                        <p class="desc">{{getDesc(song)}}</p>
                       </div>
                     </div>
                  </li>
@@ -49,12 +51,14 @@
           </scroll>
           <div class="posButton" v-show="showFlag">
               <div class="button">
+                <div class="random" @click="random">
                   <i class="icon-play"></i>
                   <span class="text">随机播放</span>
-                  <span class="count" >共{{list.length}}首</span>
+                </div>
+                  <span class="count" >共{{songs.length}}首</span>
               </div>
           </div>
-          <div v-show="!list.length" class="loading-container">
+          <div v-show="!songs.length" class="loading-container">
               <loading></loading>
           </div>
           
@@ -63,10 +67,12 @@
 </template>
 <script type="text/ecmascript-6">
 
-  import {mapGetters,mapMutations} from 'vuex'
+  import {mapGetters,mapMutations,mapActions} from 'vuex'
   import {playlistMixin} from 'common/js/mixin'
   import Scroll from 'base/scroll/scroll'
+  import {createSong} from 'common/js/song'
   import Loading from 'base/loading/loading'
+  import {getVkey} from 'api/song'
   import FadeOutHeader from 'base/fade-out-header/fade-out-header'
   import {getColor} from 'common/js/dom'
   import {ERR_OK} from 'api/config'
@@ -76,7 +82,8 @@
     data(){
       return{
           data:{},
-          list:[],
+          songs:[],
+          newSongs:[],
           scrollY:0,
           probeType:3,
           listenScroll:true,
@@ -109,6 +116,9 @@
           })
           this.setAlbumDesc(this.data)
         },
+        getDesc(song) {
+          return `${song.singer}`
+        },
         getRankText(index) {
             return index + 1
         },
@@ -116,12 +126,45 @@
           getAlbumDetail(albummid).then((res) => {
             console.log(res)
                 this.data = res.data
-                this.list = res.data.list
+                this.songs = this._normalizeSongs(res.data.list)
           })
+        },
+        _normalizeSongs(list){
+          list.forEach((musicData) => {
+            if(musicData.songid && musicData.albumid){
+              getVkey(musicData.songmid).then(res=>{
+              if(res.code === ERR_OK){
+                  let data = res.data.items[0]
+                  let url = `http://dl.stream.qqmusic.qq.com/${data.filename}?vkey=${data.vkey}&guid=7332953645&fromtag=66`
+                  this.newSongs.push(createSong(musicData,url,false))
+                }
+            })
+            }
+          })
+          return this.newSongs
         },
         scroll(pos){
           this.scrollY = pos.y
         },
+        selectItem(item,index){
+          // if(item.payalbum === 1){
+          //   alert("此歌曲为收费歌曲，暂时无法播放！")
+          //   return 
+          // }
+          this.selectPlay({
+            list:this.songs,
+            index
+          })
+        },
+        random(){
+          this.randomPlay({
+            list: this.songs
+          })
+        },
+        ...mapActions([
+            'selectPlay',
+            'randomPlay'
+        ]),
         ...mapMutations({
           setAlbumDesc:'SET_ALBUM_DESC'
         })
@@ -239,12 +282,16 @@
           display :flex
           align-items :center
           margin-left :15px
-          .icon-play
-            margin-right :5px
-            color:$color-theme
-          .text
-            color:$color-theme
+          .random
+            display :flex
+            align-items :center
             margin-right :8px
+            .icon-play
+              margin-right :5px
+              color:$color-theme
+            .text
+              color:$color-theme
+              
           .count
             font-size :$font-size-small
             color:$color-theme
@@ -294,12 +341,16 @@
         display :flex
         align-items :center
         margin-left :15px
-        .icon-play
-          margin-right :5px
-          color:$color-theme
-        .text
-          color:$color-theme
+        .random
+          display :flex
+          align-items :center
           margin-right :8px
+          .icon-play
+            margin-right :5px
+            color:$color-theme
+          .text
+            color:$color-theme
+           
         .count
           font-size :$font-size-small
           color:$color-theme

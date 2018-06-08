@@ -21,7 +21,7 @@
           </scroll>
           <scroll ref="searchList" v-if="currentIndex===1" class="list-scroll"
                   :data="searchHistory">
-            <div class="list-inner">
+            <div class="list-search-inner">
               <search-list @delete="deleteSearchHistory" @select="addQuery" :searches="searchHistory"></search-list>
             </div>
           </scroll>
@@ -166,6 +166,8 @@
           height: 100%
           overflow: hidden
           .list-inner
+            // padding: 20px 30px
+          .list-search-inner
             padding: 20px 30px
     .search-result
       position: fixed

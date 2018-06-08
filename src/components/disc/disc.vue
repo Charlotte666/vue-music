@@ -22,7 +22,7 @@
                 </div>
           </div>
           <div class="song-list-wrapper">
-            <song-list :rank="false" :in-count="[]" :songs="songs"></song-list>
+            <song-list :rank="false" :in-count="[]" :songs="songs" @select="selectItem" @random="random"></song-list>
           </div>
             <!-- <div class="suiji" v-show="!showFlag">
               <div class="button">
@@ -35,8 +35,10 @@
       </scroll>
       <div class="posButton" v-show="showFlag">
           <div class="button">
+            <div class="random" @click="random">
               <i class="icon-play"></i>
               <span class="text">随机播放</span>
+            </div>
               <span class="count" >共{{songs.length}}首</span>
           </div>
       </div>
@@ -58,6 +60,7 @@
   import {ERR_OK} from 'api/config'
   import {createSong} from 'common/js/song'
   import {getVkey} from 'api/song'
+  import {mapActions} from 'vuex'
   export default {
     mixins: [playlistMixin],
     data(){
@@ -123,7 +126,26 @@
           }
         })
         return this.newSongs
-      }
+      },
+      selectItem(item,index){
+          // if(item.payalbum === 1){
+          //   alert("此歌曲为收费歌曲，暂时无法播放！")
+          //   return 
+          // }
+          this.selectPlay({
+            list:this.songs,
+            index
+          })
+      },
+      random(){
+        this.randomPlay({
+          list: this.songs
+        })
+      },
+      ...mapActions([
+          'selectPlay',
+          'randomPlay'
+      ])
     },
     watch:{
        scrollY(newVal){
@@ -224,7 +246,7 @@
       //   margin-right :20px
     .posButton
       position: absolute
-      top: 39px
+      top: 40px
       left: 0
       width: 100%
       display :flex
@@ -236,12 +258,15 @@
         display :flex
         align-items :center
         margin-left :15px
-        .icon-play
-          margin-right :5px
-          color:$color-theme
-        .text
-          color:$color-theme
+        .random
+          display :flex
+          align-items :center
           margin-right :8px
+          .icon-play
+            margin-right :5px
+            color:$color-theme
+          .text
+            color:$color-theme
         .count
           font-size :$font-size-small
           color:$color-theme

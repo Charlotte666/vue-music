@@ -22,7 +22,7 @@
       </scroll>
       <div class="posButton" v-show="showFlag">
           <div class="button" >
-              <div @click="random">
+              <div class="random" @click="random">
                 <i class="icon-play"></i>
                 <span class="text">随机播放</span>
               </div>
@@ -267,12 +267,15 @@ export default {
         display :flex
         align-items :center
         margin-left :15px
-        .icon-play
-          margin-right :5px
-          color:$color-theme
-        .text
-          color:$color-theme
+        .random
+          display :flex
+          align-items :center
           margin-right :8px
+          .icon-play
+            margin-right :5px
+            color:$color-theme
+          .text
+            color:$color-theme
         .count
           font-size :$font-size-small
           color:$color-theme
