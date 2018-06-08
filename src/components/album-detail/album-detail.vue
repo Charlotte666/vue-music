@@ -124,7 +124,6 @@
         },
         _getAlbumDetail(albummid){
           getAlbumDetail(albummid).then((res) => {
-            console.log(res)
                 this.data = res.data
                 this.songs = this._normalizeSongs(res.data.list)
           })
@@ -246,6 +245,7 @@
           display :flex
           flex-direction :column
           margin-top :15px
+          line-height: 20px
           .albumname
             no-wrap()
             margin-bottom :15px

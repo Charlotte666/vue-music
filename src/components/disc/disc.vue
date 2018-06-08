@@ -15,22 +15,15 @@
                       <img class="avatar" v-lazy="data.headurl" >
                       <span class="singername">{{data.nickname}}</span>
                     </div>
-                    <div class="desc">
-                      <span class="info">简介：{{data.desc}}</span>
-                      <i class="new-icon-rightarrow"></i>
+                    <div class="desc" v-show="tags.length">
+                      <span class="info">标签：{{getTags(tags)}}</span>
+                      <!-- <i class="new-icon-rightarrow"></i> -->
                     </div>
                 </div>
           </div>
           <div class="song-list-wrapper">
             <song-list :rank="false" :in-count="[]" :songs="songs" @select="selectItem" @random="random"></song-list>
           </div>
-            <!-- <div class="suiji" v-show="!showFlag">
-              <div class="button">
-                  <i class="icon-play"></i>
-                  <span class="text">随机播放</span>
-                  <span class="count" >共{{songs.length}}首</span>
-              </div>
-            </div> -->
         </div>
       </scroll>
       <div class="posButton" v-show="showFlag">
@@ -54,13 +47,12 @@
   import Scroll from 'base/scroll/scroll'
   import FadeOutHeader from 'base/fade-out-header/fade-out-header'
   import {playlistMixin} from 'common/js/mixin'
-  import {mapGetters} from 'vuex'
+  import {mapGetters,mapMutations,mapActions} from 'vuex'
   import {getSongList} from 'api/recommend'
   import Loading from 'base/loading/loading'
   import {ERR_OK} from 'api/config'
   import {createSong} from 'common/js/song'
   import {getVkey} from 'api/song'
-  import {mapActions} from 'vuex'
   export default {
     mixins: [playlistMixin],
     data(){
@@ -68,6 +60,7 @@
         data:[],
         songs: [],
         newSongs:[],
+        tags:[],
         scrollY:0,
         probeType:3,
         listenScroll:true,
@@ -89,11 +82,21 @@
       ])
     },
     methods:{
-         handlePlaylist(playlist){
-          console.log(playlist)
+        handlePlaylist(playlist){
           const bottom = playlist.length > 0 ? '60px' : ''
           this.$refs.list.$el.style.bottom = bottom
           this.$refs.list.refresh()
+        },
+        getTags(tags){
+          if(tags.length == 1){
+            return tags[0].name
+          }else{
+            let name = ""
+            tags.forEach((item)=>{
+              name = name+" "+item.name
+            })
+            return name
+          }
         },
         _getSongList(){
           if(!this.disc.dissid){
@@ -103,6 +106,8 @@
         getSongList(this.disc.dissid).then((res) =>{
           if(res.code === ERR_OK){
              this.data = res.cdlist[0]
+             this.tags = res.cdlist[0].tags
+             console.log(this.tags)
              this.songs = this._normalizeSongs(res.cdlist[0].songlist)
           }
         })

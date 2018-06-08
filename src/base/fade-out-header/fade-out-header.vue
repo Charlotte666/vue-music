@@ -65,6 +65,7 @@
         margin-top :10px
     .header2
       .headerText2
+        no-wrap()
         display:flex
         font-size: $font-size-large
         color:$color-theme

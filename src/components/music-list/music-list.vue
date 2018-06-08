@@ -128,7 +128,6 @@ export default {
     },
     watch:{
        scrollY(newVal){
-         console.log(newVal)
         if(newVal <= -250){
             this.showFlag = true
           }else{

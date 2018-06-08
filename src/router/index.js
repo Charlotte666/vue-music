@@ -18,7 +18,6 @@ import AlbumDetail from 'components/album-detail/album-detail'
 import AlbumDetailDesc from 'components/album-detail-desc/album-detail-desc'
 
 
-
 Vue.use(Router)
 
 export default new Router({
@@ -46,7 +45,7 @@ export default new Router({
         children:[
         {
           path: ':id',
-          component: Disc
+          component: Disc,
         },
         {
           path: ':disstid1/:disstid2', 
@@ -55,12 +54,6 @@ export default new Router({
         {
           path: 'album/detail/:albummid', 
           component: AlbumDetail,
-          // children:[
-          //   {
-          //     path:':albummid1',
-          //     component:AlbumDetailDesc
-          //   }
-          // ]
         },
         {
           path: 'album/desc/info', 
