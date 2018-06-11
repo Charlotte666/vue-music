@@ -1,6 +1,6 @@
 <template>
 <transition name="slider">
-  <div id="new-song">
+  <div id="new-song" ref="newsong">
     <div class="m-header">
       <div class="switches-wrapper">
         <switches @switch="switchItem" :switches="switches" :currentIndex="currentIndex"></switches>
@@ -15,7 +15,7 @@
       </tab>
       <swiper v-model="index" :height="computHeight" :show-dots="false">
         <swiper-item v-for="(item, index) in list" :key="index" >
-            <scroll :data="changeData(index)" :probe-type="probeType" :listen-scroll="listenScroll" class="list" ref="list">
+            <scroll v-if="currentIndex===0" :data="changeData(index)" :probe-type="probeType" :listen-scroll="listenScroll" class="list" ref="list">
               <div class="song-list-wrapper">
                   <song-list :songs="changeData(index)"></song-list>
               </div>
@@ -23,9 +23,26 @@
                <loading></loading>
               </div>
             </scroll>
+            <scroll v-if="currentIndex===1" :data="changeData(index)" :probe-type="probeType" :listen-scroll="listenScroll" class="list" ref="list">
+              <div class="album-list-wrapper">
+                <ul class="diss">
+                  <li v-for="item in changeData(index)" class="item" @click="toAlbum(item)" :style="computWidth">
+                      <div class="icon">
+                        <img class="image" :style="computWidth" v-lazy="`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.album_mid}.jpg?max_age=2592000`"/>
+                      </div>
+                      <div class="text">
+                          <h2 class="desc" v-html="item.album_name"></h2>
+                          <p class="name" v-html="item.singers[0].singer_name"></p>
+                      </div>
+                  </li>
+                </ul>
+              </div>
+              <div v-show="!showLoading(index)" class="loading-container">
+               <loading></loading>
+              </div>
+            </scroll>
         </swiper-item>
       </swiper>
-      
     </div>
     <router-view></router-view>
   </div>
@@ -42,16 +59,19 @@
   import Loading from 'base/loading/loading'
   import {getVkey} from 'api/song'
   import {createSong} from 'common/js/song'
+  import {playlistMixin} from 'common/js/mixin'
   import { Tab, TabItem, Swiper, SwiperItem } from 'vux'
   const list1 = () => ['最新','内地','港台','欧美','日本','韩国']
-  const list2 = () => ['内地','港台','欧美','韩国','日本']
+  const list2 = () => ['推荐','内地','港台','欧美','韩国','日本']
   export default {
+    mixins: [playlistMixin],
     data() {
       return {
         currentIndex: 0,
         disstid1:'',
         disstid2:'',
         songs0:[],songs1:[],songs2:[],songs3:[],songs4:[],songs5:[],
+        album0:[],album1:[],album2:[],album3:[],album4:[],album5:[],
         switches: [
           {
             name: '新歌'
@@ -61,7 +81,8 @@
           }
         ],
         list: list1(),
-        index: 0 
+        index: 0 ,
+        mounted:false
       }
      },
      created(){
@@ -71,14 +92,33 @@
        this.listenScroll = true
        this._getSongList()
      },
+     mounted(){
+      this.mounted = true
+     },
       methods:{
+        handlePlaylist(playlist){
+          const bottom = playlist.length > 0 ? '160px' : ''
+          this.$refs.newsong.style.bottom = bottom
+          if(this.mounted){
+            console.log(1)
+           this.$refs.list.refresh()
+          }
+        },
         back(){
             this.$router.push({
                 path:'/appShow/recommend'
             })
         },
+        toAlbum(item){
+          this.$router.push({
+            path: `/appShow/recommend/album/detail/${item.album_mid}`
+          })
+        },
         switchItem(index) {
          this.currentIndex = index
+         this.currentIndex == 0 ? this.list = list1() : this.list = list2()
+         this.changeIndex(this.newSongRefsh)
+         this.$refs.list.refresh()
         },
         _getSongList(){
           let dissitid = this.newSongRefsh == 0 ? this.disstid1 : this.disstid2
@@ -89,24 +129,34 @@
           })
         },
         _getNewList(i,type,area){
+          if(this.currentIndex == 0){
+             i = 1
+          }else{
+            i = 2
+          }
           getNewList(i,type,area).then(async (res) => {
               if(res.code === ERR_OK){
-               let song = await this._normalizeSongs2(res.new_song.data.song_list)
+               let item = []
+               this.currentIndex == 0 ? item = await this._normalizeSongs2(res.new_song.data.song_list) : item = res.new_album.data.list.slice(0,39)
+               console.log(item)
                 switch (this.newSongRefsh) {
+                  case 0:
+                     this.currentIndex == 0 ? "" : this.album0 = item
+                     break
                   case 1:
-                     this.songs1 = song
+                     this.currentIndex == 0 ? this.songs1 = item : this.album1 = item
                      break
                   case 2:
-                     this.songs2 = song
+                     this.currentIndex == 0 ? this.songs2 = item : this.album2 = item
                      break
                   case 3:
-                     this.songs3 = song
+                     this.currentIndex == 0 ? this.songs3 = item : this.album3 = item
                      break
                   case 4:
-                     this.songs4 = song
+                     this.currentIndex == 0 ? this.songs4 = item : this.album4 = item
                      break
                   case 5:
-                     this.songs5 = song
+                     this.currentIndex == 0 ? this.songs5 = item : this.album5 = item
                      break
                   default:
                       return false
@@ -149,22 +199,22 @@
        changeData(index){
         switch (index) {
             case 0:
-              return this.songs0
+              return this.currentIndex == 0 ? this.songs0 : this.album0
               break
             case 1:
-              return this.songs1
+              return this.currentIndex == 0 ? this.songs1 : this.album1
               break
             case 2:
-              return this.songs2
+              return this.currentIndex == 0 ? this.songs2 : this.album2
               break
             case 3:
-              return this.songs3
+              return this.currentIndex == 0 ? this.songs3 : this.album3
               break
             case 4:
-              return this.songs4
+              return this.currentIndex == 0 ? this.songs4 : this.album4
               break
             case 5:
-              return this.songs5
+              return this.currentIndex == 0 ? this.songs5 : this.album5
               break
             default:
                 return false
@@ -175,45 +225,45 @@
         switch (index) {
             case 0://最新
                  this.setNewSongRefsh(index)
-                 if(this.songs0.length !== 0 ){
+                 if(this.currentIndex == 0 ? this.songs0.length !== 0 : this.album0.length !== 0){
                    return false
                  }
-                 this._getSongList()
+                 this.currentIndex == 0 ? this._getSongList() : this._getNewList(2,0,7)
                  break
             case 1://内地
                 this.setNewSongRefsh(index)
-                if(this.songs1.length !== 0){
+                if(this.currentIndex == 0 ? this.songs1.length !== 0 : this.album1.length){
                    return false
                  }
-                this._getNewList(1,1,0)
+                this.currentIndex == 0 ? this._getNewList(1,1,0) : this._getNewList(2,0,1)
                 break
             case 2://港台
                 this.setNewSongRefsh(index)
-                if(this.songs2.length !== 0){
+                if(this.currentIndex == 0 ? this.songs2.length !== 0 : this.album2.length !== 0){
                    return false
                  }
-                this._getNewList(1,2,0)
+                this.currentIndex == 0 ? this._getNewList(1,2,0) : this._getNewList(2,0,0)
                 break
             case 3://欧美
                  this.setNewSongRefsh(index)
-                 if(this.songs3.length !== 0){
+                 if(this.currentIndex == 0 ? this.songs3.length !== 0 : this.album3.length !== 0){
                    return false
                  }
-                 this._getNewList(1,3,0)
+                 this.currentIndex == 0 ? this._getNewList(1,3,0) : this._getNewList(2,0,3)
                  break
             case 4://日本
                  this.setNewSongRefsh(index)
-                 if(this.songs4.length !== 0){
+                 if(this.currentIndex == 0 ? this.songs4.length !== 0 : this.album4.length !== 0){
                    return false
                  }
-                 this._getNewList(1,4,0)
+                 this.currentIndex == 0 ? this._getNewList(1,4,0) : this._getNewList(2,0,14)
                  break
             case 5://韩国
                  this.setNewSongRefsh(index)
-                 if(this.songs5.length !== 0){
+                 if(this.currentIndex == 0 ? this.songs5.length !== 0 : this.album5.length !== 0){
                    return false
                  }
-                 this._getNewList(1,5,0)
+                 this.currentIndex == 0 ? this._getNewList(1,5,0) : this._getNewList(2,0,15)
                  break
             default:
                 return false
@@ -222,22 +272,22 @@
        showLoading(index){
           switch (index) {
             case 0:
-              return this.songs0.length
+              return this.currentIndex == 0 ? this.songs0.length : this.album0.length
               break
             case 1:
-              return this.songs1.length
+              return this.currentIndex == 0 ? this.songs1.length : this.album1.length
               break
             case 2:
-              return this.songs2.length
+              return this.currentIndex == 0 ? this.songs2.length : this.album2.length
               break
             case 3:
-              return this.songs3.length
+              return this.currentIndex == 0 ? this.songs3.length : this.album3.length
               break
             case 4:
-              return this.songs4.length
+              return this.currentIndex == 0 ? this.songs4.length : this.album4.length
               break
             case 5:
-              return this.songs5.length
+              return this.currentIndex == 0 ? this.songs5.length : this.album5.length
               break
             default:
                 return false
@@ -250,6 +300,9 @@
       computed:{
         computHeight(){
           return window.innerHeight+'px'
+        },
+        computWidth(){
+           return 'width:' + (window.innerWidth-20)/3 + 'px'
         },
         // select(){
         //   return this.newSongRefsh == 0 ? '最新' : '推荐'
@@ -315,11 +368,32 @@
         font-size: $font-size-large-xl
         color: $color-theme
     .list
-      height:90%
+      height:88%
       overflow hidden
       background: $color-background
       // .song-list-wrapper
       //   padding: 20px 30px
+      .album-list-wrapper
+        .diss
+          display :flex
+          flex-wrap:wrap 
+          justify-content :center
+          margin-left :5px
+          .item
+            margin-right :5px
+            .icon
+              margin-bottom :13px
+            .text
+              font-size: $font-size-small
+              .desc
+                no-wrap()
+                color: $color-text
+                margin-bottom :10px
+                line-height: 18px
+              .name
+                no-wrap()
+                color: $color-text-d
+                margin-bottom :20px
       .loading-container
         position: absolute
         width: 100%

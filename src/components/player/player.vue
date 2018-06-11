@@ -590,9 +590,9 @@ export default {
         .title
           width: 70%
           margin: 0 auto
-          line-height: 40px
           text-align: center
           no-wrap()
+          line-height: 40px
           font-size: $font-size-large
           color: $color-text
         .subtitle
