@@ -54,10 +54,12 @@ export default new Router({
         {
           path: 'album/detail/:albummid', 
           component: AlbumDetail,
-        },
-        {
-          path: 'album/desc/info', 
-          component: AlbumDetailDesc,
+          children:[
+            {
+              path:'desc',
+              component: AlbumDetailDesc,
+            }
+          ]
         }
       ]
     },{

@@ -44,6 +44,7 @@
   import {createSong} from 'common/js/song'
   import { Tab, TabItem, Swiper, SwiperItem } from 'vux'
   const list1 = () => ['最新','内地','港台','欧美','日本','韩国']
+  const list2 = () => ['内地','港台','欧美','韩国','日本']
   export default {
     data() {
       return {

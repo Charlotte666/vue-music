@@ -61,7 +61,7 @@
           <div v-show="!songs.length" class="loading-container">
               <loading></loading>
           </div>
-          
+          <router-view></router-view>
     </div>
   </transition>
 </template>
@@ -112,7 +112,7 @@
         },
         todesc(){
           this.$router.push({
-            path:`/appShow/recommend/album/desc/info`
+            path:`/appShow/recommend/album/detail/${this.$route.params.albummid}/desc`
           })
           this.setAlbumDesc(this.data)
         },
