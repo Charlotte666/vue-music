@@ -32,7 +32,7 @@
             </div>
           </div>
           <div class="new-songs" @click="toNew(0,0)">
-            <div class="new-song">
+            <div class="new-song" v-show="info1.cover">
               <img width="58" height="58" v-lazy="info1.cover"/>
             </div>
             <div class="info">
@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="new-songs" @click="toNew(0,0)">
-            <div class="new-song">
+            <div class="new-song" v-show="info2.cover">
               <img width="58" height="58" v-lazy="info2.cover"/>
             </div>
             <div class="info">

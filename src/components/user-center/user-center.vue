@@ -3,10 +3,10 @@
       <div class="switches-wrapper">
         <switches @switch="switchItem" :switches="switches" :currentIndex="currentIndex"></switches>
       </div>
-      <div ref="playBtn" class="play-btn" @click="random">
+      <!-- <div ref="playBtn" class="play-btn" @click="random">
         <i class="icon-play"></i>
         <span class="text">随机播放全部</span>
-      </div>
+      </div> -->
       <div class="list-wrapper" ref="listWrapper">
         <scroll ref="favoriteList" class="list-scroll" v-if="currentIndex===0" :data="favoriteList">
           <div class="list-inner">
@@ -15,12 +15,13 @@
         </scroll>
         <scroll ref="playList" class="list-scroll" v-if="currentIndex===1" :data="playHistory">
           <div class="list-inner">
-            <song-list :songs="playHistory" @select="selectSong"></song-list>
+            <song-list :songs="playHistory" @select="selectSong" @random="random"></song-list>
           </div>
         </scroll>
       </div>
       <div class="no-result-wrapper" v-show="noResult">
-        <no-result :title="noResultDesc"></no-result>
+           <span class="noResultDesc">{{noResultDesc}}</span>
+        <!-- <no-result :title="noResultDesc"></no-result> -->
       </div>
     </div>
 </template>
@@ -119,7 +120,7 @@
     width: 100%
     background: $color-background
     .switches-wrapper
-      margin: 10px 0 30px 0
+      margin: 10px 0 10px 0
     .play-btn
       box-sizing: border-box
       width: 135px
@@ -141,17 +142,21 @@
         font-size: $font-size-small
     .list-wrapper
       position: absolute
-      top: 110px
+      top: 65px
       bottom: 0
       width: 100%
       .list-scroll
         height: 100%
         overflow: hidden
         .list-inner
-          padding: 20px 30px
+          // padding: 20px 30px
     .no-result-wrapper
       position: absolute
       width: 100%
       top: 50%
       transform: translateY(-50%)
+      text-align: center
+      .noResultDesc
+        font-size: $font-size-medium
+        color: $color-text-d
 </style>
