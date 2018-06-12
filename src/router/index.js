@@ -48,7 +48,7 @@ export default new Router({
           component: Disc,
         },
         {
-          path: ':disstid1/:disstid2', 
+          path: ':disstid1/:disstid2/:index', 
           component: NewSong,
           children:[
             {
@@ -60,16 +60,6 @@ export default new Router({
                   component:AlbumDetailDesc
                 }
               ]
-            }
-          ]
-        },
-        {
-          path: 'album/detail/:albummid', 
-          component: AlbumDetail,
-          children:[
-            {
-              path:'desc',
-              component: AlbumDetailDesc,
             }
           ]
         }

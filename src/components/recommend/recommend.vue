@@ -31,7 +31,7 @@
               <span class="new-span">新歌</span>
             </div>
           </div>
-          <div class="new-songs" @click="toNew(0)">
+          <div class="new-songs" @click="toNew(0,0)">
             <div class="new-song">
               <img width="58" height="58" v-lazy="info1.cover"/>
             </div>
@@ -42,7 +42,7 @@
               </div>
             </div>
           </div>
-          <div class="new-songs" @click="toNew(0)">
+          <div class="new-songs" @click="toNew(0,0)">
             <div class="new-song">
               <img width="58" height="58" v-lazy="info2.cover"/>
             </div>
@@ -72,7 +72,7 @@
           <div class="new-album-list">
             <div class="title-wrapper">
               <h1 class="list-title">最 新 专 辑</h1>
-              <i class="new-icon-right" @click="toType"></i>
+              <i class="new-icon-right" @click="toNew(0,1)"></i>
             </div>
           </div>
           <recommend-album :items="newAlbumList" @select="toAlbum"></recommend-album>
@@ -128,7 +128,7 @@ export default {
     },
     toAlbum(item){
       this.$router.push({
-        path: `/appShow/recommend/album/detail/${item.album_mid}`
+        path: `/appShow/recommend/${this.info1.content_id}/${this.info2.content_id}/${0}/${item.album_mid}`
       })
     },
      handlePlaylist(playlist){
@@ -192,12 +192,11 @@ export default {
           path:'/appShow/type'
         })
       },
-      toNew(state){
+      toNew(state,switchIndex){
          this.$router.push({
-          path:`/appShow/recommend/${this.info1.content_id}/${this.info2.content_id}`
+          path:`/appShow/recommend/${this.info1.content_id}/${this.info2.content_id}/${switchIndex}`
         })
         this.setNewSongRefsh(state)
-        
       },
       ...mapMutations({
         setDisc : 'SET_DISC',

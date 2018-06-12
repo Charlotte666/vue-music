@@ -15,16 +15,11 @@
       </tab>
       <swiper v-model="index" :height="computHeight" :show-dots="false">
         <swiper-item v-for="(item, index) in list" :key="index" >
-            <scroll v-if="currentIndex===0" :data="changeData(index)" :probe-type="probeType" :listen-scroll="listenScroll" class="list" ref="list">
-              <div class="song-list-wrapper">
-                  <song-list :songs="changeData(index)"></song-list>
+            <scroll  :data="changeData(index)" :probe-type="probeType" :listen-scroll="listenScroll" class="list" ref="index">
+              <div class="song-list-wrapper" v-if="currentIndex===0">
+                  <song-list :songs="changeData(index)" @select="selectItem" @random="random"></song-list>
               </div>
-              <div v-show="!showLoading(index)" class="loading-container">
-               <loading></loading>
-              </div>
-            </scroll>
-            <scroll v-if="currentIndex===1" :data="changeData(index)" :probe-type="probeType" :listen-scroll="listenScroll" class="list" ref="list">
-              <div class="album-list-wrapper">
+              <div class="album-list-wrapper" v-if="currentIndex===1">
                 <ul class="diss">
                   <li v-for="item in changeData(index)" class="item" @click="toAlbum(item)" :style="computWidth">
                       <div class="icon">
@@ -51,7 +46,7 @@
 
 <script type="text/ecmascript-6">
   import {getNewList,getSongList} from 'api/recommend'
-  import {mapGetters,mapMutations} from 'vuex'
+  import {mapGetters,mapMutations,mapActions} from 'vuex'
   import {ERR_OK} from 'api/config'
   import Switches from 'base/switches/switches'
   import SongList from 'base/song-list/song-list'
@@ -82,28 +77,28 @@
         ],
         list: list1(),
         index: 0 ,
-        mounted:false,
-        data:{}
+        data:{},
+        refreshIndex:0,
+        length:false
       }
      },
      created(){
        this.disstid1 = this.$route.params.disstid1 //最新
        this.disstid2 = this.$route.params.disstid2 //推荐
+       this.currentIndex = parseInt(this.$route.params.index)
        this.probeType = 3 //better-scroll的probeType属性默认是1,如果想要在scroll快速滚动的时候,正确的监听scroll,需把该属性设置为3。
        this.listenScroll = true
-       this._getSongList()
-     },
-     mounted(){
-      this.mounted = true
+       if(this.currentIndex == 0){
+         this._getSongList()
+       }else{
+         this._getNewList(2,0,7)
+       }
+       
      },
       methods:{
         handlePlaylist(playlist){
-          const bottom = playlist.length > 0 ? '160px' : ''
-          this.$refs.newsong.style.bottom = bottom
-          if(this.mounted){
-            console.log(1)
-           this.$refs.list.refresh()
-          }
+          playlist.length > 0 ? this.length = true : this.length = false
+          this.$refs.index[this.refreshIndex].refresh() // 因为scroll嵌套在swiper-item里 所以绑定的ref要用 this.refreshIndex才能取到
         },
         back(){
             this.$router.push({
@@ -112,14 +107,14 @@
         },
         toAlbum(item){
           this.$router.push({
-            path: `/appShow/recommend/${this.disstid1}/${this.disstid2}/${item.album_mid}`
+            path: `/appShow/recommend/${this.disstid1}/${this.disstid2}/${this.currentIndex}/${item.album_mid}`
           })
         },
         switchItem(index) {
          this.currentIndex = index
          this.currentIndex == 0 ? this.list = list1() : this.list = list2()
          this.changeIndex(this.newSongRefsh)
-         this.$refs.list.refresh()
+         this.$refs.index[this.refreshIndex].refresh() 
         },
         _getSongList(){
           let dissitid = this.newSongRefsh == 0 ? this.disstid1 : this.disstid2
@@ -223,6 +218,7 @@
        },
        changeIndex(index){
         console.log(index+"---"+"index")
+        this.refreshIndex = index // scroll绑定的ref 的数组下标
         switch (index) {
             case 0://最新
                  this.setNewSongRefsh(index)
@@ -293,21 +289,40 @@
             default:
                 return false
         }
-       },
+        
+        },
+        selectItem(item,index){
+          let songs = this.changeData(this.index) // 处理在当前歌曲哪个songs里
+          this.selectPlay({
+            list:songs,
+            index
+          })
+        },
+        random(){
+          let songs = this.changeData(this.index)// 处理在当前歌曲哪个songs里
+          this.randomPlay({
+            list: songs
+          })
+        },
         ...mapMutations({
           setNewSongRefsh : 'SET_NEW_SONG_REFSH'
-        })
+        }),
+        ...mapActions([
+            'selectPlay',
+            'randomPlay'
+        ]),
       },
       computed:{
-        computHeight(){
-          return window.innerHeight+'px'
+        computHeight(){ // 计算高度 适配当迷你播放器出现时 滚动到最底部遮挡问题
+          if(this.length){
+            return (window.innerHeight)-70+'px'
+          }else{
+           return window.innerHeight+'px'
+          }
         },
         computWidth(){
            return 'width:' + (window.innerWidth-20)/3 + 'px'
         },
-        // select(){
-        //   return this.newSongRefsh == 0 ? '最新' : '推荐'
-        // },
         ...mapGetters([
           'newSongRefsh'
         ])

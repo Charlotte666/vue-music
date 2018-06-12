@@ -113,7 +113,7 @@
         todesc(){
           if(this.$route.params.disstid1){
             this.$router.push({
-              path:`/appShow/recommend/${this.$route.params.disstid1}/${this.$route.params.disstid2}/${this.$route.params.albummid}/desc`
+              path:`/appShow/recommend/${this.$route.params.disstid1}/${this.$route.params.disstid2}/${this.$route.params.index}/${this.$route.params.albummid}/desc`
             })
           }else{
             this.$router.push({
