@@ -177,7 +177,7 @@
           .icon
             margin-right: 10px
             font-size: 30px
-            color: $color-theme-d
+            color: $color-text-new
           .text
             flex: 1
             font-size: $font-size-medium
@@ -186,7 +186,7 @@
             extend-click()
             .icon-clear
               font-size: $font-size-medium
-              color: $color-text-d
+              color: $color-text-new
       .list-content
         max-height: 240px
         overflow: hidden
@@ -204,7 +204,7 @@
             flex: 0 0 20px
             width: 20px
             font-size: $font-size-small
-            color: $color-theme-d
+            color: $color-text-new
           .text
             flex: 1
             no-wrap()

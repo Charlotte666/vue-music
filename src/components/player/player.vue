@@ -800,7 +800,7 @@ export default {
         padding: 0 10px
         .icon-play-mini, .icon-pause-mini, .icon-playlist
           font-size: 30px
-          color: $color-theme-d
+          color: $color-text-new
         .icon-mini
           font-size: 32px
           position: absolute
