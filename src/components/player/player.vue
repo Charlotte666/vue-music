@@ -704,7 +704,7 @@ export default {
             &.active
               width: 20px
               border-radius: 5px
-              background: $color-text-ll
+              background: $color-text-new 
         .progress-wrapper
           display: flex
           align-items: center
