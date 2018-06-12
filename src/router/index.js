@@ -49,7 +49,19 @@ export default new Router({
         },
         {
           path: ':disstid1/:disstid2', 
-          component: NewSong
+          component: NewSong,
+          children:[
+            {
+              path:':albummid',
+              component:AlbumDetail,
+              children:[
+                {
+                  path:'desc',
+                  component:AlbumDetailDesc
+                }
+              ]
+            }
+          ]
         },
         {
           path: 'album/detail/:albummid', 

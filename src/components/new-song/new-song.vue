@@ -82,7 +82,8 @@
         ],
         list: list1(),
         index: 0 ,
-        mounted:false
+        mounted:false,
+        data:{}
       }
      },
      created(){
@@ -111,7 +112,7 @@
         },
         toAlbum(item){
           this.$router.push({
-            path: `/appShow/recommend/album/detail/${item.album_mid}`
+            path: `/appShow/recommend/${this.disstid1}/${this.disstid2}/${item.album_mid}`
           })
         },
         switchItem(index) {
@@ -368,7 +369,7 @@
         font-size: $font-size-large-xl
         color: $color-theme
     .list
-      height:88%
+      height:87%
       overflow hidden
       background: $color-background
       // .song-list-wrapper

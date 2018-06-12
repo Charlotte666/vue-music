@@ -167,6 +167,7 @@ export default {
          getNewList(2,0,7).then((res) => {
               if(res.code === ERR_OK){
                 this.newAlbumList = res.new_album.data.list.slice(0,6) // 截取前6个元素
+                this.$refs.scroll.refresh()
               }
           })
       },

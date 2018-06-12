@@ -111,9 +111,16 @@
           this.$router.back()
         },
         todesc(){
-          this.$router.push({
-            path:`/appShow/recommend/album/detail/${this.$route.params.albummid}/desc`
-          })
+          if(this.$route.params.disstid1){
+            this.$router.push({
+              path:`/appShow/recommend/${this.$route.params.disstid1}/${this.$route.params.disstid2}/${this.$route.params.albummid}/desc`
+            })
+          }else{
+            this.$router.push({
+              path:`/appShow/recommend/album/detail/${this.$route.params.albummid}/desc`
+            })
+          }
+         
           this.setAlbumDesc(this.data)
         },
         getDesc(song) {
