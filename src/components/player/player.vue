@@ -7,7 +7,7 @@
                 @after-leave="afterLeave">
       <div class="normal-player" v-show="fullScreen">
           <div class="background">
-            <img width="100%" height="100%" :src="currentSong.image">
+            <!-- <img width="100%" height="100%" :src="currentSong.image"> -->
           </div>
           <div class="top">
             <div class="back" @click="back">
@@ -570,6 +570,7 @@ export default {
         top: 0
         width: 100%
         height: 100%
+        background: $color-background
         z-index: -1
         opacity: 0.6
         filter: blur(20px)
