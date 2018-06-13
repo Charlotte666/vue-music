@@ -1,6 +1,6 @@
 <template>
   <div class="splash">
-      <img src="./111.jpg">
+      <img  src="./home.png">
   </div>
 </template>
 
@@ -9,7 +9,7 @@ export default {
     mounted(){
         setTimeout(() => {
           this._showSplash()
-        }, 2500)
+        }, 2100)
     },
     methods:{
       _showSplash(){
@@ -17,26 +17,24 @@ export default {
               path:'/appShow/recommend'
           })
       }
-    },
+    }
 }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+@import "~common/stylus/variable"
+@import "~common/stylus/mixin"
 .splash 
+  position: fixed
+  left: 0
+  right: 0
+  top: 0
+  bottom: 0
+  background: $color-background
+  display :flex
+  justify-content :center
+  align-items :center
   img
-    position:fixed
-    width:100%
-    height:100%
-//   #splash
-//     position fixed
-//     top 0
-//     left 0
-//     z-index 6
-//     width 100%
-//     height 100%
-//     opacity 1
-//     transition opacity .3s ease
-//     box-sizing border-box
-//     &.fade-enter,&.fade-leave-to
-//       opacity 0;
+    width:93%
+    height:75%
 </style>

@@ -16,6 +16,7 @@ import TypeSong from 'components/type-song/type-song'
 import NewSong from 'components/new-song/new-song'
 import AlbumDetail from 'components/album-detail/album-detail'
 import AlbumDetailDesc from 'components/album-detail-desc/album-detail-desc'
+import About from 'components/about/about'
 
 
 Vue.use(Router)
@@ -119,6 +120,9 @@ export default new Router({
     },{
       path: 'user', 
       component: UserCenter
+    },{
+      path: 'about', 
+      component: About
     }
   ]
   }]

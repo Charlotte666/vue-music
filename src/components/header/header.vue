@@ -9,8 +9,8 @@
      <router-link tag="div" class="tab-item" to="/appShow/recommend">
       <span class="tab-link">音乐馆</span>
      </router-link>
-     <router-link tag="div" class="tab-item" to="/appShow/find">
-      <span class="tab-link">发现</span>
+     <router-link tag="div" class="tab-item" to="/appShow/about">
+      <span class="tab-link">关于</span>
      </router-link>
     </div>
     <div class="search">
