@@ -38,7 +38,7 @@
           </div>
       </div>
 
-      <div class="version-wrapper">
+      <div class="version-wrapper" @click="showHideOnBlur=true" v-model="showHideOnBlur">
           <i class="new-icon-version"></i>
           <div class="version-right">
              <span class="title">VerSion</span>
@@ -55,19 +55,39 @@
              <span class="copyright">Copyright© 2018 Wangjiahuan Rights Reserved</span>
           </div>
       </div>
-        
+      
+      <div v-transfer-dom >
+        <x-dialog class="dialog-demo" hide-on-blur v-model="showHideOnBlur" :dialog-style="{'max-width': '100%', width: '80%', height: '50%', 'background-color': 'transparent'}">
+          <p style="color:#fff;text-align:center;">
+            <img width="150px" height="150px" src="../../common/image/default.png" >
+            <br>
+            <span style="font-size:18px;">Love Music</span>
+            <span style="font-size:18px;">1.0.0</span>
+            <br>
+            <br>
+            <span style="font-size:18px;line-height:25px">基于 Vue 全家桶 (2.x) 制作的移动端音乐 WebApp ，一个自己独立开发的媲美原生的移动端音乐 WebApp，项目完整、功能完备、UI美观、交互一流。</span>
+            <br>
+            <br> 
+            <x-icon type="ios-close-outline" style="fill:#fff;" @click="showHideOnBlur = false"></x-icon>
+          </p>
+        </x-dialog>
+      </div>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
   import {mapGetters, mapActions} from 'vuex'
   import {playlistMixin} from 'common/js/mixin'
-  import { XDialog } from 'vux'
+  import { XDialog , TransferDomDirective as TransferDom } from 'vux'
   export default {
     mixins: [playlistMixin],
+    directives: {
+      TransferDom
+    },
     data() {
       return {
-          length:false
+          length:false,
+          showHideOnBlur:false
       }
     },
     computed: {
@@ -225,4 +245,16 @@
         .copyright
           font-size :$font-size-small-x
           color :$color-text-d
+    .dialog-demo
+      .img-box 
+        height: 350px
+        overflow: hidden
+        .wrapper
+          background-color  :white
+          height:100px
+      .vux-close 
+        margin-top: 8px
+        margin-bottom: 8px
+  
+  
 </style>
