@@ -89,13 +89,6 @@ export default {
       display:flex
       flex-direction: column
       width:100%
-      .icon
-        display: inline-block
-        width: 25px
-        height: 27px
-        margin-right: 9px
-        bg-image('./img/logo')
-        background-size: 25px 27px
       .link
         display:flex
         flex-direction: row
