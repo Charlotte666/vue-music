@@ -38,7 +38,7 @@
           </div>
       </div>
 
-      <div class="version-wrapper" @click="showVersion=true" v-model="showHideOnBlur">
+      <div class="version-wrapper" @click="showVersion=true" v-model="showVersion">
           <i class="new-icon-version"></i>
           <div class="version-right">
              <span class="title">VerSion</span>
@@ -77,7 +77,7 @@
               <div class="img-box">
                 <img src="./img/wangjiahuan.jpg" style="max-width:100%">
               </div>
-              <x-icon type="ios-close-outline" style="fill:#000;" @click="showImage = false"></x-icon>
+              <x-icon type="ios-close-outline" style="fill:#956d39;" @click="showImage = false"></x-icon>
             </x-dialog>
           </div>
       </div>
