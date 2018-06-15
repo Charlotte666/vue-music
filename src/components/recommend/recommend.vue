@@ -27,8 +27,8 @@
               <span class="type-span">分类歌单</span>
             </div> 
             <div class="new">
-              <i class="new-icon-new"></i>
-              <span class="new-span">新歌</span>
+              <i class="new-icon-radiostation" @click="toRadio"></i>
+              <span class="new-span">电台</span>
             </div>
           </div>
           <div class="new-songs" @click="toNew(0,0)">
@@ -192,6 +192,11 @@ export default {
           path:'/appShow/type'
         })
       },
+      toRadio(){
+        this.$router.push({
+          path:'/appShow/radio'
+        })
+      },
       toNew(state,switchIndex){
          this.$router.push({
           path:`/appShow/recommend/${this.info1.content_id}/${this.info2.content_id}/${switchIndex}`
@@ -277,7 +282,7 @@ export default {
           flex-direction :column
           align-items :center
           margin-left :65px
-          .new-icon-new
+          .new-icon-radiostation
             font-size :28px
             margin-bottom :10px
           .new-span

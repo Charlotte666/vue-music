@@ -1,7 +1,7 @@
 <template>
     <div class="about">
       <div class="head-wrapper">
-        <div class="head">
+        <div class="head" @click="showImage=true" v-model="showImage">
             <img class="headimg" src="./img/wangjiahuan.jpg" alt="">
         </div>
       </div>
@@ -38,7 +38,7 @@
           </div>
       </div>
 
-      <div class="version-wrapper" @click="showHideOnBlur=true" v-model="showHideOnBlur">
+      <div class="version-wrapper" @click="showVersion=true" v-model="showHideOnBlur">
           <i class="new-icon-version"></i>
           <div class="version-right">
              <span class="title">VerSion</span>
@@ -57,7 +57,7 @@
       </div>
       
       <div v-transfer-dom >
-        <x-dialog class="dialog-demo" hide-on-blur v-model="showHideOnBlur" :dialog-style="{'max-width': '100%', width: '80%', height: '50%', 'background-color': 'transparent'}">
+        <x-dialog class="dialog-demo" v-model="showVersion" :dialog-style="{'max-width': '100%', width: '80%', height: '50%', 'background-color': 'transparent'}">
           <p style="color:#fff;text-align:center;">
             <img width="150px" height="150px" src="../../common/image/default.png" >
             <br>
@@ -65,14 +65,22 @@
             <span style="font-size:18px;">1.0.0</span>
             <br>
             <br>
-            <span style="font-size:18px;line-height:25px">基于 Vue 全家桶 (2.x) 制作的移动端音乐 WebApp ，一个自己独立开发的媲美原生的移动端音乐 WebApp，项目完整、功能完备、UI美观、交互一流。</span>
+            <span style="font-size:18px;line-height:25px">一款自己独立开发的基于 Vue 全家桶 (2.x)，可以媲美原生的移动端音乐 WebApp，项目完整、功能完备、UI美观、交互一流。</span>
             <br>
             <br> 
-            <x-icon type="ios-close-outline" style="fill:#fff;" @click="showHideOnBlur = false"></x-icon>
+            <x-icon type="ios-close-outline" style="fill:#fff;" @click="showVersion = false"></x-icon>
           </p>
         </x-dialog>
       </div>
-    </div>
+      <div v-transfer-dom>
+            <x-dialog v-model="showImage" class="dialog-demo" hide-on-blur>
+              <div class="img-box">
+                <img src="./img/wangjiahuan.jpg" style="max-width:100%">
+              </div>
+              <x-icon type="ios-close-outline" style="fill:#000;" @click="showImage = false"></x-icon>
+            </x-dialog>
+          </div>
+      </div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -87,7 +95,8 @@
     data() {
       return {
           length:false,
-          showHideOnBlur:false
+          showVersion:false,
+          showImage:false
       }
     },
     computed: {

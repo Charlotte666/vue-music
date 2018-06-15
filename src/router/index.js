@@ -17,6 +17,7 @@ import NewSong from 'components/new-song/new-song'
 import AlbumDetail from 'components/album-detail/album-detail'
 import AlbumDetailDesc from 'components/album-detail-desc/album-detail-desc'
 import About from 'components/about/about'
+import RadioStation from 'components/radio-station/radio-station'
 
 
 Vue.use(Router)
@@ -65,7 +66,8 @@ export default new Router({
           ]
         }
       ]
-    },{
+    },
+    {
       path: 'rank', 
       component: rank,
       children:[
@@ -74,7 +76,8 @@ export default new Router({
           component: TopList
         }
       ]
-    },{
+    },
+    {
       path: 'search', 
       component: search,
       children:[
@@ -83,7 +86,8 @@ export default new Router({
           component: SingerDetail
         }
     ]
-    },{
+    },
+    {
       path: 'type', 
       component: Type,
       children:[
@@ -108,7 +112,12 @@ export default new Router({
           component: Disc
         }
     ]
-    },{
+    },
+    {
+      path:'radio',
+      component:RadioStation
+    },
+    {
       path: 'singer', 
       component: singer,
       children:[
@@ -117,10 +126,12 @@ export default new Router({
           component: SingerDetail
         }
     ]
-    },{
+    },
+    {
       path: 'user', 
       component: UserCenter
-    },{
+    },
+    {
       path: 'about', 
       component: About
     }
