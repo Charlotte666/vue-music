@@ -90,27 +90,25 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         console.log(e)
       })
      }),
-    //  app.get('/api/getNewList', function(req,res){
-    //   var url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
-    //   axios.get(url, {
-    //     headers:{
-    //       referer: 'https://c.y.qq.com/',
-    //       host: 'c.y.qq.com'
-    //     },
-    //     params: req.query
-    //   }).then((response) => {
-    //     var ret = response.data
-    //     res.json(ret)
-    //   }).catch((e) => {
-    //     console.log(e)
-    //   })
-    //  }),
+     app.get('/api/getTypeKeyList', function(req,res){
+      var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_tag_conf.fcg'
+      axios.get(url, {
+        headers:{
+          referer: 'https://c.y.qq.com/',
+          host: 'c.y.qq.com'
+        },
+        params: req.query
+      }).then((response) => {
+        var ret = response.data
+        res.json(ret)
+      }).catch((e) => {
+        console.log(e)
+      })
+     }),
      app.get('/api/lyric', function(req,res){
-     // var url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg'
       var url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg'
       axios.get(url, {
         headers: {
-          //referer: `https://y.qq.com/n/yqq/song/${req.query.musicid}.html`,
           referer: `https://c.y.qq.com/`,
           host: 'c.y.qq.com'
         },

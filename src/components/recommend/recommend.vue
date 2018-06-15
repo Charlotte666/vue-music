@@ -26,8 +26,8 @@
               <i class="new-icon-type"></i>
               <span class="type-span">分类歌单</span>
             </div> 
-            <div class="new">
-              <i class="new-icon-radiostation" @click="toRadio"></i>
+            <div class="new" @click="toRadio">
+              <i class="new-icon-radiostation"></i>
               <span class="new-span">电台</span>
             </div>
           </div>

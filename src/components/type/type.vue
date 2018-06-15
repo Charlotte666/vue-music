@@ -93,6 +93,7 @@ export default {
     },
     _getTypeKeyList(){
         getTypeKeyList().then((res) => {
+          console.log(res)
               if(res.code === ERR_OK){
                   this.categories = res.data.categories // 大分类
                   this.categories.forEach((element,index) => {
