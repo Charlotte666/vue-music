@@ -7,25 +7,41 @@
     <div class="back" @click="back">
           <i class="icon-back"></i>
     </div>
-    <div class="img-wrapper">
-      <div class="img-bg">
-        <img class="img" src="./radio.gif" alt="">
-      </div>
-    </div>
     <div class="group-radio-wrapper">
-      <scroll class="group-wrapper" :data="groupList">
+      <scroll class="group-wrapper" :data="groupList" ref="groupScroll">
         <div>
           <ul >
-          <li v-for="item in groupList" class="group-item">
+          <li v-for="(item,index) in groupList" class="group-item" :class="{'current':currentIndex===index}" @click="selectGroup(index,$event)">
             <span class="text border-1px">{{item.name}}</span>
           </li>
         </ul>
         </div>
         
       </scroll>
-      <!-- <scroll class="radio-wrapper" :data="groupList">
-
-      </scroll> -->
+      <scroll :probe-type="probeType" :listen-scroll="listenScroll" @scroll="scroll" class="radio-wrapper" :data="groupList" ref="radiolist">
+        <div>
+          <ul>
+            <li class="radio-list" v-for="item in groupList" ref="groupList">
+              <h1 class="title">{{item.name}}</h1>
+              <ul class="radio-info">
+                <li class="radio-item" v-for="radio in item.radioList">
+                  <div class="icon">
+                    <img class="image" :style="computWidth" v-lazy="radio.radioImg"/>
+                  </div>
+                  <div class="text">
+                    <h2 class="desc" v-html="radio.radioName"></h2>
+                    <!-- <p class="name" v-html="item.singers[0].singer_name"></p> -->
+                  </div>
+                  <i class="new-icon-play2"></i>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="list-fixed" ref="fixed" v-show="fixedTitle">
+          <div class="fixed-title">{{fixedTitle}} </div>
+        </div>
+      </scroll>
     </div>
 
 
@@ -41,18 +57,44 @@ import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import {playlistMixin} from 'common/js/mixin'
 import {mapMutations} from 'vuex'
-
+const TITLE_HEIGHT = 35
 export default {
-//   mixins: [playlistMixin],
+  mixins: [playlistMixin],
   data(){
     return{
-      groupList:[]
+      groupList:[],
+      listHeight:[],
+      scrollY: 0,
+      diff: -1
     }
   },
   created(){
+    this.probeType = 3
+    this.listenScroll = true
     this._getGroupRadioList()
   },
   computed:{
+      computWidth(){
+        return 'width:' + (window.innerWidth-45-80)/2 + 'px'
+      },
+      currentIndex(){
+        for(let i=0;i<this.listHeight.length;i++){
+          let height1 = this.listHeight[i]
+          let height2 = this.listHeight[i+1]
+          if(!height2 || (-this.scrollY >= height1 && -this.scrollY < height2)){
+            this.diff = height2 + this.scrollY
+            // console.log(this.diff)
+            return i
+          }
+        }
+        return 0
+      },
+      fixedTitle() {
+        if (this.scrollY > 0) {
+          return ''
+        }
+        return this.groupList[this.currentIndex] ? this.groupList[this.currentIndex].name : ''
+      }
   },
   methods:{
     back(){
@@ -60,18 +102,55 @@ export default {
         path:'/appShow/recommend'
       })
     },
-    // handlePlaylist(playlist){
-    //       const bottom = playlist.length > 0 ? '100px' : '' // 播放器高度加上原有bottom 等于148
-    //       this.$refs.type.style.bottom = bottom
-    //       this.$refs.typeList.refresh()
-    // },
+    handlePlaylist(playlist){
+          const bottom = playlist.length > 0 ? '40px' : '' 
+          this.$refs.radio.style.bottom = bottom
+          this.$refs.groupScroll.refresh()
+          this.$refs.radiolist.refresh()
+    },
     _getGroupRadioList(){
       getGroupRadioList().then((res) => {
           if(res.code === ERR_OK){
               this.groupList = res.data.data.groupList
+              
               console.log(this.groupList)
           }
       })
+    },
+    _calculateHeight(){
+        this.listHeight = []
+        const list = this.$refs.groupList
+        let height = 0
+        this.listHeight.push(height)
+        for (let i = 0; i < list.length; i++) {
+          let item = list[i]
+          height += item.clientHeight
+          this.listHeight.push(height)
+        }
+    },
+    scroll(pos){
+      this.scrollY = pos.y // 转换滚动时的Y值为正值
+    },
+    selectGroup(index,event){
+      if(event._constructed){ // 解决pc端点击触发两次
+         const list = this.$refs.groupList
+         this.$refs.radiolist.scrollToElement(list[index], 300)
+      }
+    }
+  },
+  watch:{
+    groupList(){
+      setTimeout(() => {
+        this._calculateHeight()
+      }, 20)
+    },
+    diff(newVal) {
+        let fixedTop = (newVal > 0 && newVal < TITLE_HEIGHT) ? newVal - TITLE_HEIGHT : 0
+        if (this.fixedTop === fixedTop) {
+          return
+        }
+        this.fixedTop = fixedTop
+        this.$refs.fixed.style.transform = `translate3d(0,${fixedTop}px,0)`
     }
   },
   components: {
@@ -115,32 +194,15 @@ export default {
         padding: 10px
         font-size:  $font-size-large-xl
         color: $color-theme
-    .img-wrapper
-      display :flex
-      justify-content :center
-      .img-bg
-        display :flex
-        justify-content :center
-        align-items :center
-        margin-top :15px
-        height:200px
-        width:230px
-        background-size:100%
-        border-radius: 50%
-        background-color:rgba(255, 255, 255, 0.2)
-        z-index :2
-        .img
-          height:180px
-          width:210px
-          border-radius: 50%
     .group-radio-wrapper
       position:fixed
-      top:300px
+      top:45px
       left :0
       right :0
       bottom :0
       display :flex
       flex-direction :row
+      overflow: hidden
       .group-wrapper
         flex:0 0 80px
         overflow: hidden
@@ -152,15 +214,65 @@ export default {
           width:56px
           padding:0 25px
           line-height :14px
+          &.current
+            background :$color-background
           .text
             display :table-cell
             width:56px
             vertical-align :middle
-            font-size :12px
+            font-size :$font-size-small
             color :$color-text
             // border-1px($color-background) 1px边框
       .radio-wrapper
         overflow: hidden
         flex:1
+        .radio-list
+          .title
+            padding-left :14px
+            height:35px
+            line-height :36px
+            border-left :2px solid #d9dde1
+            font-size :$font-size-small
+            color :$color-text
+            background :$color-highlight-background
+          .radio-info
+            display :flex
+            flex-wrap:wrap 
+            padding-top:20px
+            padding-bottom :15px
+            margin-left :15px
+            .radio-item
+              margin-right :15px
+              .icon
+                margin-bottom :13px
+                .image
+                  border-radius :50%
+              .new-icon-play2
+                  position relative
+                  font-size :20px
+                  top:-133px
+                  left:65px
+                  color:#fff
+              .text
+                font-size: $font-size-small
+                margin-bottom :15px
+                text-align :center
+                .desc
+                  no-wrap()
+                  color: $color-text
+        .list-fixed
+          position: absolute
+          top: 0px
+          left: 80px
+          width: 100%
+          .fixed-title
+            padding-left :14px
+            height:35px
+            line-height :36px
+            border-left :2px solid #d9dde1
+            font-size :$font-size-small
+            color :$color-text
+            background :$color-highlight-background
+
 
 </style>
