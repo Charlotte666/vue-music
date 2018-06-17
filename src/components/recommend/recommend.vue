@@ -77,7 +77,7 @@
           </div>
           <recommend-album :items="newAlbumList" @select="toAlbum"></recommend-album>
         </div>
-      <div class="loading-container" v-show="!discList.length">
+      <div class="loading-container" v-show="!discList.length && !newAlbumList.length">
         <loading></loading>
       </div>
       </scroll>
@@ -374,7 +374,7 @@ export default {
       .loading-container
         position: absolute
         width: 100%
-        top: 50%
+        top: 75%
         transform: translateY(-50%)
 
 </style>
