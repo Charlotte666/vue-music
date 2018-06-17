@@ -17,3 +17,18 @@ export function getGroupRadioList() {
     })
     return jsonp(url, data, options)
 }
+
+export function getRadioSonglist(radioId) {
+  const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
+  let data = {"songlist":{"module":"pf.radiosvr","method":"GetRadiosonglist","param":{"id":radioId,"firstplay":1,"num":10}}}
+  const datas = Object.assign({}, commonParams, {
+    needNewCode: 0,
+    callback:'getradiosonglist47197189254706573',
+    // jsonpCallback:'getradiosonglist47197189254706573',
+    format:'jsonp',
+    // loginUin:'1369526524',
+    platform: 'yqq',
+    data:JSON.stringify(data)
+  })
+  return jsonp(url, datas, options)
+}

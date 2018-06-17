@@ -32,7 +32,7 @@
                     <h2 class="desc" v-html="radio.radioName"></h2>
                     <!-- <p class="name" v-html="item.singers[0].singer_name"></p> -->
                   </div>
-                  <i class="new-icon-play2"></i>
+                  <i class="new-icon-play2" @click="seclecRadio(radio.radioId)"></i>
                 </li>
               </ul>
             </li>
@@ -43,8 +43,6 @@
         </div>
       </scroll>
     </div>
-
-
     <router-view></router-view>
   </div>
 </transition>
@@ -52,7 +50,7 @@
 
 <script>
 import {ERR_OK} from 'api/config'
-import {getGroupRadioList} from 'api/radio'
+import {getGroupRadioList,getRadioSonglist} from 'api/radio'
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import {playlistMixin} from 'common/js/mixin'
@@ -115,6 +113,15 @@ export default {
               
               console.log(this.groupList)
           }
+      })
+    },
+    seclecRadio(radioId){
+      this._getRadioSonglist(radioId)
+    },
+    _getRadioSonglist(radioId){
+      getRadioSonglist(radioId).then((res) => {
+          
+          console.log(res)
       })
     },
     _calculateHeight(){
