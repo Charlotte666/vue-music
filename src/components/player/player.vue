@@ -89,7 +89,7 @@
           <div class="text">
             <h2 class="name" v-html="currentSong.name"></h2>
             <p class="desc" v-html="currentSong.singer" v-show="this.playing"></p>
-            <p class="desc-touch" v-show="!this.playing">左右横滑可以切换上下首</p>
+            <p class="desc-touch" v-show="!playing">左右横滑可以切换上下首</p>
           </div>
         <div class="control">
           <progress-circle :radius="radius" :percent="percent">

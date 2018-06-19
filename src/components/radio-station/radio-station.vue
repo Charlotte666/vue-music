@@ -24,7 +24,7 @@
             <li class="radio-list" v-for="item in groupList" ref="groupList">
               <h1 class="title">{{item.name}}</h1>
               <ul class="radio-info">
-                <li class="radio-item" v-for="radio in item.radioList">
+                <li class="radio-item" v-for="(radio,index) in item.radioList">
                   <div class="icon">
                     <img class="image" :style="computWidth" v-lazy="radio.radioImg"/>
                   </div>
@@ -32,7 +32,7 @@
                     <h2 class="desc" v-html="radio.radioName"></h2>
                     <!-- <p class="name" v-html="item.singers[0].singer_name"></p> -->
                   </div>
-                  <i class="new-icon-play2" @click="seclecRadio(radio.radioId)"></i>
+                  <i class="new-icon-play2" :class="playIcon(index)" @click="seclecRadio(radio.radioId,index)"></i>
                 </li>
               </ul>
             </li>
@@ -50,11 +50,13 @@
 
 <script>
 import {ERR_OK} from 'api/config'
-import {getGroupRadioList,getRadioSonglist} from 'api/radio'
+import {getGroupRadioList,getRadioSonglist,getPersonalityRadio} from 'api/radio'
 import Scroll from 'base/scroll/scroll'
+import {getVkey} from 'api/song'
+import {createSong} from 'common/js/song'
 import Loading from 'base/loading/loading'
 import {playlistMixin} from 'common/js/mixin'
-import {mapMutations} from 'vuex'
+import {mapMutations,mapActions,mapGetters} from 'vuex'
 const TITLE_HEIGHT = 35
 export default {
   mixins: [playlistMixin],
@@ -63,7 +65,10 @@ export default {
       groupList:[],
       listHeight:[],
       scrollY: 0,
-      diff: -1
+      diff: -1,
+      songs1:[],
+      songs2:[],
+      playIndex:0
     }
   },
   created(){
@@ -72,10 +77,13 @@ export default {
     this._getGroupRadioList()
   },
   computed:{
+      ...mapGetters([
+          'playing',
+      ]),
       computWidth(){
         return 'width:' + (window.innerWidth-45-80)/2 + 'px'
       },
-      currentIndex(){
+      currentIndex(){ // 计算当前处于哪个index
         for(let i=0;i<this.listHeight.length;i++){
           let height1 = this.listHeight[i]
           let height2 = this.listHeight[i+1]
@@ -87,7 +95,7 @@ export default {
         }
         return 0
       },
-      fixedTitle() {
+      fixedTitle() { // 滚动时标题的样式和动画
         if (this.scrollY > 0) {
           return ''
         }
@@ -106,25 +114,71 @@ export default {
           this.$refs.groupScroll.refresh()
           this.$refs.radiolist.refresh()
     },
-    _getGroupRadioList(){
+    _getGroupRadioList(){ // 所有分类list
       getGroupRadioList().then((res) => {
           if(res.code === ERR_OK){
               this.groupList = res.data.data.groupList
-              
-              console.log(this.groupList)
           }
       })
     },
-    seclecRadio(radioId){
+    seclecRadio(radioId,index){
+      this.playIndex = index
       this._getRadioSonglist(radioId)
     },
-    _getRadioSonglist(radioId){
-      getRadioSonglist(radioId).then((res) => {
-          
-          console.log(res)
-      })
+    playIcon(index){ // 根绝播放状态显示播放图标
+       if(this.playIndex == index){
+         return this.playing ? 'new-icon-suspend' : 'new-icon-play2' 
+       }
     },
-    _calculateHeight(){
+    _getRadioSonglist(radioId){
+      if(radioId == 99){ // 个性电台
+        if(this.songs1.length > 0){
+          this.setPlayingState(!this.playing) // 控制播放状态
+          return
+        }
+        getPersonalityRadio().then((res)=>{
+          if(res.code === ERR_OK){
+             this.songs1 = this._normalizeSongs(res.songlist)
+             let index = 0
+             this.selectPlay({
+                list:this.songs1,
+                index
+             })
+          }
+        })
+      }else{ // 其他电台
+        if(this.songs2.length > 0){
+          this.setPlayingState(!this.playing) // 控制播放状态
+          return
+        }
+        getRadioSonglist(radioId).then((res) => {
+          if(res.code === ERR_OK){
+            this.songs2 = this._normalizeSongs(res.songlist.data.track_list)
+            let index = 0
+            this.selectPlay({
+                list:this.songs2,
+                index
+            })
+          }
+        })
+      }
+    },
+    _normalizeSongs(list){ // 处理电台歌曲数据
+      let songItems = []
+        list.forEach((musicData) => {
+        if(musicData.mid){
+          getVkey(musicData.mid).then(res=>{ // 获取vkey
+            if(res.code === ERR_OK){
+              let data = res.data.items[0]
+              let url = `http://dl.stream.qqmusic.qq.com/${data.filename}?vkey=${data.vkey}&guid=7332953645&fromtag=66`
+              songItems.push(createSong(musicData,url,true))
+            }
+           })
+          }
+      })
+      return songItems
+    },
+    _calculateHeight(){ // 计算每个group的高度 存储到listHeight
         this.listHeight = []
         const list = this.$refs.groupList
         let height = 0
@@ -138,20 +192,26 @@ export default {
     scroll(pos){
       this.scrollY = pos.y // 转换滚动时的Y值为正值
     },
-    selectGroup(index,event){
+    selectGroup(index,event){ // 滚动到相应index
       if(event._constructed){ // 解决pc端点击触发两次
          const list = this.$refs.groupList
          this.$refs.radiolist.scrollToElement(list[index], 300)
       }
-    }
+    },
+    ...mapActions([
+      'selectPlay'
+    ]),
+    ...mapMutations({
+      setPlayingState: 'SET_PLAYING_STATE',
+    }),
   },
   watch:{
-    groupList(){
+    groupList(){ // 监听groupList变化 重新计算高度
       setTimeout(() => {
         this._calculateHeight()
       }, 20)
     },
-    diff(newVal) {
+    diff(newVal) {// 计算滚动的距离来控制fixedTop
         let fixedTop = (newVal > 0 && newVal < TITLE_HEIGHT) ? newVal - TITLE_HEIGHT : 0
         if (this.fixedTop === fixedTop) {
           return
@@ -255,6 +315,12 @@ export default {
                 .image
                   border-radius :50%
               .new-icon-play2
+                  position relative
+                  font-size :20px
+                  top:-133px
+                  left:65px
+                  color:#fff
+              .new-icon-suspend
                   position relative
                   font-size :20px
                   top:-133px
