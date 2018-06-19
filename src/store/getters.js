@@ -32,4 +32,8 @@ export const newSongRefsh = state => state.newSongRefsh
 
 export const albumDesc = state => state.albumDesc
 
+export const playingRadioId = state => state.playingRadioId
+
+
+
 

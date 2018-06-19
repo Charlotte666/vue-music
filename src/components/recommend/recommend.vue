@@ -76,8 +76,15 @@
             </div>
           </div>
           <recommend-album :items="newAlbumList" @select="toAlbum"></recommend-album>
+          <div class="radio-list">
+            <div class="title-wrapper">
+              <h1 class="list-title">精 选 电 台</h1>
+              <i class="new-icon-right" @click="toNew(0,1)"></i>
+            </div>
+          </div>
+          <recommend-radio :items="radioList" @seclecRadio="seclecRadio"></recommend-radio>
         </div>
-      <div class="loading-container" v-show="!discList.length && !newAlbumList.length">
+      <div class="loading-container" v-show="!discList.length && !newAlbumList.length && !radioList.length">
         <loading></loading>
       </div>
       </scroll>
@@ -87,8 +94,13 @@
 
 <script>
 import {getRecommend,getDiscList,getNewList} from 'api/recommend'
+import {getGroupRadioList,getRadioSonglist,getPersonalityRadio} from 'api/radio'
+import {getRandomArrayElements} from 'common/js/util'
+import {getVkey} from 'api/song'
 import mheader from 'components/header/header'
+import {createSong} from 'common/js/song'
 import RecommendAlbum from 'components/recommend-album/recommend-album'
+import RecommendRadio from 'components/recommend-radio/recommend-radio'
 import {ERR_OK} from 'api/config'
 import slider from 'base/slider/slider'
 import scroll from 'base/scroll/scroll'
@@ -96,7 +108,7 @@ import ThreeColumnList from 'base/three-column-list/three-column-list'
 import loading from 'base/loading/loading'
 import CustomLoad from 'base/custom-load/custom-load'
 import {playlistMixin} from 'common/js/mixin'
-import {mapMutations} from 'vuex'
+import {mapMutations,mapActions,mapGetters} from 'vuex'
 
 //换一批参数
 let startNo = 0
@@ -109,15 +121,24 @@ export default {
         recommends : [],
         discList : [],
         newAlbumList : [],
+        radioList:[],
         info1:[],
         info2:[],
         loading:false,
+        radioSongs1:[],
+        radioSongs2:[]
     }
   },
   created(){
     this._getRecommend()
     this._getDiscList()
     this._getNewList()
+    this._getGroupRadioList()
+  },
+  computed:{
+      ...mapGetters([
+          'playing',
+      ]),
   },
   methods:{
     selectItem(item){
@@ -171,11 +192,74 @@ export default {
               }
           })
       },
+      _getGroupRadioList(){
+        getGroupRadioList().then((res) => {
+          if(res.code === ERR_OK){
+              res.data.data.groupList[0].radioList.splice(0,1) // 删除个性电台
+              let radioList = res.data.data.groupList[0].radioList
+              this.radioList = getRandomArrayElements(radioList,6) // 随机截取6个元素
+              this.$refs.scroll.refresh()
+              console.log(this.radioList)
+          }
+        })
+      },
       loadImage() {
         if (!this.checkloaded) {
           this.checkloaded = true
           this.$refs.scroll.refresh()
         }
+      },
+      seclecRadio(item){
+        this.setPlayingRadioId(item.radioId)
+        this._getRadioSonglist(item.radioId)
+      },
+      _getRadioSonglist(radioId){
+        if(radioId == 99){ // 个性电台
+          if(this.radioSongs1.length > 0){
+            this.setPlayingState(!this.playing) // 控制播放状态
+            return
+          }
+          getPersonalityRadio().then((res)=>{
+            if(res.code === ERR_OK){
+              this.radioSongs1 = this._normalizeSongs(res.songlist)
+              let index = 0
+              this.selectPlay({
+                  list:this.radioSongs1,
+                  index
+              })
+            }
+          })
+        }else{ // 其他电台
+          if(this.radioSongs2.length > 0){
+            this.setPlayingState(!this.playing) // 控制播放状态
+            return
+          }
+          getRadioSonglist(radioId).then((res) => {
+            if(res.code === ERR_OK){
+              this.radioSongs2 = this._normalizeSongs(res.songlist.data.track_list)
+              let index = 0
+              this.selectPlay({
+                  list:this.radioSongs2,
+                  index
+              })
+            }
+          })
+        }
+      },
+      _normalizeSongs(list){ // 处理电台歌曲数据
+        let songItems = []
+          list.forEach((musicData) => {
+          if(musicData.mid){
+            getVkey(musicData.mid).then(res=>{ // 获取vkey
+              if(res.code === ERR_OK){
+                let data = res.data.items[0]
+                let url = `http://dl.stream.qqmusic.qq.com/${data.filename}?vkey=${data.vkey}&guid=7332953645&fromtag=66`
+                songItems.push(createSong(musicData,url,true))
+              }
+            })
+            }
+        })
+        return songItems
       },
       toSinger(){
         this.$router.push({
@@ -205,8 +289,13 @@ export default {
       },
       ...mapMutations({
         setDisc : 'SET_DISC',
-        setNewSongRefsh : 'SET_NEW_SONG_REFSH'
-      })
+        setPlayingState: 'SET_PLAYING_STATE',
+        setNewSongRefsh : 'SET_NEW_SONG_REFSH',
+        setPlayingRadioId:'SET_PLAYING_RADIO_ID'
+      }),
+      ...mapActions([
+        'selectPlay'
+      ])
   },
   components:{
       slider,
@@ -215,7 +304,8 @@ export default {
       mheader,
       ThreeColumnList,
       CustomLoad,
-      RecommendAlbum
+      RecommendAlbum,
+      RecommendRadio
   }
 }
 
@@ -353,6 +443,26 @@ export default {
             font-size :16px
             margin-right:8px
       .new-album-list
+        .title-wrapper
+          display :flex
+          flex-direction :row
+          align-items :center
+          justify-content :center
+        .list-title
+          flex:1
+          height: 65px
+          line-height: 65px
+          text-align: center
+          margin-left:35px
+          font-size: $font-size-medium-xl
+          font-weight :500
+          color: $color-theme
+        .new-icon-right
+          font-size :20px
+          font-weight :500
+          margin-right:15px
+      .radio-list
+        margin-bottom :8px
         .title-wrapper
           display :flex
           flex-direction :row

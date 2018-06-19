@@ -293,6 +293,7 @@
         },
         selectItem(item,index){
           let songs = this.changeData(this.index) // 处理在当前歌曲哪个songs里
+          this.setPlayingRadioId("")
           this.selectPlay({
             list:songs,
             index
@@ -305,7 +306,8 @@
           })
         },
         ...mapMutations({
-          setNewSongRefsh : 'SET_NEW_SONG_REFSH'
+          setNewSongRefsh : 'SET_NEW_SONG_REFSH',
+          setPlayingRadioId:'SET_PLAYING_RADIO_ID'
         }),
         ...mapActions([
             'selectPlay',

@@ -15,7 +15,8 @@ const state = {
     playHistory: loadPlay(),
     favoriteList: loadFavorite(),
     newSongRefsh:-1, //控制new-song页面刷新
-    albumDesc:{} //专辑简介对象
+    albumDesc:{}, //专辑简介对象
+    playingRadioId:"" // 正在播放的电台ID
 }
 
 export default state

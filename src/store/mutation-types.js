@@ -28,5 +28,8 @@ export const SET_NEW_SONG_REFSH = 'SET_NEW_SONG_REFSH'
 
 export const SET_ALBUM_DESC = 'SET_ALBUM_DESC'
 
+export const SET_PLAYING_RADIO_ID = 'SET_PLAYING_RADIO_ID'
+
+
 
 

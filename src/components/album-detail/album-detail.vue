@@ -157,6 +157,7 @@
           //   alert("此歌曲为收费歌曲，暂时无法播放！")
           //   return 
           // }
+          this.setPlayingRadioId("") // 因为切换到歌曲播放 要清空电台id
           this.selectPlay({
             list:this.songs,
             index
@@ -172,7 +173,8 @@
             'randomPlay'
         ]),
         ...mapMutations({
-          setAlbumDesc:'SET_ALBUM_DESC'
+          setAlbumDesc:'SET_ALBUM_DESC',
+          setPlayingRadioId:'SET_PLAYING_RADIO_ID'
         })
     },
     watch:{

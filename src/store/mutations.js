@@ -45,6 +45,9 @@ const mutations = {
       },
       [types.SET_ALBUM_DESC](state,desc) {
         state.albumDesc = desc
+      },
+      [types.SET_PLAYING_RADIO_ID](state,playingRadioId) {
+        state.playingRadioId = playingRadioId
       }
 }
 

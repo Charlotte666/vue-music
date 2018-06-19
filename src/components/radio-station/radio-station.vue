@@ -32,7 +32,7 @@
                     <h2 class="desc" v-html="radio.radioName"></h2>
                     <!-- <p class="name" v-html="item.singers[0].singer_name"></p> -->
                   </div>
-                  <i class="new-icon-play2" :class="playIcon(index)" @click="seclecRadio(radio.radioId,index)"></i>
+                  <i class="new-icon-play2" :class="playIcon(radio.radioId)" @click="seclecRadio(radio.radioId)"></i>
                 </li>
               </ul>
             </li>
@@ -68,7 +68,6 @@ export default {
       diff: -1,
       songs1:[],
       songs2:[],
-      playIndex:0
     }
   },
   created(){
@@ -79,6 +78,7 @@ export default {
   computed:{
       ...mapGetters([
           'playing',
+          'playingRadioId'
       ]),
       computWidth(){
         return 'width:' + (window.innerWidth-45-80)/2 + 'px'
@@ -121,12 +121,12 @@ export default {
           }
       })
     },
-    seclecRadio(radioId,index){
-      this.playIndex = index
+    seclecRadio(radioId){
+      this.setPlayingRadioId(radioId) // 保存当前播放的radioId 到vux
       this._getRadioSonglist(radioId)
     },
-    playIcon(index){ // 根绝播放状态显示播放图标
-       if(this.playIndex == index){
+    playIcon(radioId){ // 根绝播放状态显示播放图标
+       if(this.playingRadioId == radioId){
          return this.playing ? 'new-icon-suspend' : 'new-icon-play2' 
        }
     },
@@ -203,6 +203,7 @@ export default {
     ]),
     ...mapMutations({
       setPlayingState: 'SET_PLAYING_STATE',
+      setPlayingRadioId:'SET_PLAYING_RADIO_ID'
     }),
   },
   watch:{

@@ -40,7 +40,7 @@ import SongList from 'base/song-list/song-list'
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import {prefixStyle} from 'common/js/dom'
-import {mapActions} from 'vuex'
+import {mapActions, mapMutations} from 'vuex'
 import {playlistMixin} from 'common/js/mixin'
 
 const RESERVED_HEIGHT = 40
@@ -110,6 +110,7 @@ export default {
           //   alert("此歌曲为收费歌曲，暂时无法播放！")
           //   return 
           // }
+          this.setPlayingRadioId("")
           this.selectPlay({
             list:this.songs,
             index
@@ -123,7 +124,10 @@ export default {
         ...mapActions([
           'selectPlay',
           'randomPlay'
-        ])
+        ]),
+        ...mapMutations({
+          setPlayingRadioId:'SET_PLAYING_RADIO_ID'
+        })
 
     },
     watch:{
