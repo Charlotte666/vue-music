@@ -1,26 +1,116 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import rank from 'components/rank/rank'
-import recommend from 'components/recommend/recommend'
-import search from 'components/search/search'
-import singer from 'components/singer/singer'
-import SingerDetail from 'components/singer-detail/singer-detail'
-import Disc from 'components/disc/disc'
-import TopList from 'components/top-list/top-list'
-import appShow from 'components/appShow/appShow'
-import Splash from 'components/splash/splash'
-import UserCenter from 'components/user-center/user-center'
-import Type from 'components/type/type'
-import TypeAllKey from 'components/type-all-key/type-all-key'
-import TypeSong from 'components/type-song/type-song'
-import NewSong from 'components/new-song/new-song'
-import AlbumDetail from 'components/album-detail/album-detail'
-import AlbumDetailDesc from 'components/album-detail-desc/album-detail-desc'
-import About from 'components/about/about'
-import RadioStation from 'components/radio-station/radio-station'
-
 
 Vue.use(Router)
+
+
+const Recommend = (resolve) => {
+  import('components/recommend/recommend').then((recommend)=>{
+    resolve(recommend)
+  })
+}
+
+const Rank = (resolve) => {
+  import('components/rank/rank').then((rank)=>{
+    resolve(rank)
+  })
+}
+
+const Search = (resolve) => {
+  import('components/search/search').then((search)=>{
+    resolve(search)
+  })
+}
+
+const Singer = (resolve) => {
+  import('components/singer/singer').then((singer)=>{
+    resolve(singer)
+  })
+}
+
+const SingerDetail = (resolve) => {
+  import('components/singer-detail/singer-detail').then((singerDetail)=>{
+    resolve(singerDetail)
+  })
+}
+
+const Disc = (resolve) => {
+  import('components/disc/disc').then((disc)=>{
+    resolve(disc)
+  })
+}
+
+const TopList = (resolve) => {
+  import('components/top-list/top-list').then((topList)=>{
+    resolve(topList)
+  })
+}
+
+const AppShow = (resolve) => {
+  import('components/appShow/appShow').then((appShow)=>{
+    resolve(appShow)
+  })
+}
+
+const Splash = (resolve) => {
+  import('components/splash/splash').then((splash)=>{
+    resolve(splash)
+  })
+}
+
+const UserCenter = (resolve) => {
+  import('components/user-center/user-center').then((userCenter)=>{
+    resolve(userCenter)
+  })
+}
+
+const Type = (resolve) => {
+  import('components/type/type').then((type)=>{
+    resolve(type)
+  })
+}
+
+const TypeAllKey = (resolve) => {
+  import('components/type-all-key/type-all-key').then((typeAllKey)=>{
+    resolve(typeAllKey)
+  })
+}
+
+const TypeSong = (resolve) => {
+  import('components/type-song/type-song').then((typeSong)=>{
+    resolve(typeSong)
+  })
+}
+
+const NewSong = (resolve) => {
+  import('components/new-song/new-song').then((newSong)=>{
+    resolve(newSong)
+  })
+}
+
+const AlbumDetail = (resolve) => {
+  import('components/album-detail/album-detail').then((albumDetail)=>{
+    resolve(albumDetail)
+  })
+}
+
+const AlbumDetailDesc = (resolve) => {
+  import('components/album-detail-desc/album-detail-desc').then((albumDetailDesc)=>{
+    resolve(albumDetailDesc)
+  })
+}
+
+const About = (resolve) => {
+  import('components/about/about').then((about)=>{
+    resolve(about)
+  })
+}
+
+const RadioStation = (resolve) => {
+  import('components/radio-station/radio-station').then((radioStation)=>{
+    resolve(radioStation)
+  })
+}
 
 export default new Router({
   routes: [
@@ -34,7 +124,7 @@ export default new Router({
     },
     {
       path:'/appShow',
-      component: appShow,
+      component: AppShow,
       children:[
       {
         path: "", 
@@ -43,7 +133,7 @@ export default new Router({
       {
         name: 'recommend',
         path: 'recommend', 
-        component: recommend,
+        component: Recommend,
         children:[
         {
           path: ':id',
@@ -69,7 +159,7 @@ export default new Router({
     },
     {
       path: 'rank', 
-      component: rank,
+      component: Rank,
       children:[
         {
           path: ':id',
@@ -79,7 +169,7 @@ export default new Router({
     },
     {
       path: 'search', 
-      component: search,
+      component: Search,
       children:[
         {
           path: ':id',
@@ -119,7 +209,7 @@ export default new Router({
     },
     {
       path: 'singer', 
-      component: singer,
+      component: Singer,
       children:[
         {
           path: ':id',
