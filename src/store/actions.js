@@ -12,7 +12,10 @@ function findIndex(list, song) {
   })
 }
 
-export const selectPlay = function ({commit, state}, {list, index}) {
+export const selectPlay = function ({commit, state}, {list, index , radio}) {
+    if(!radio){
+      commit(types.SET_PLAYING_RADIO_ID, "") // 不是播放电台时需要清空radioid
+    }
     commit(types.SET_SEQUENCE_LIST, list)
     if (state.mode === playMode.random) {
       let randomList = shuffle(list)
@@ -27,6 +30,7 @@ export const selectPlay = function ({commit, state}, {list, index}) {
   }
 
   export const randomPlay = function ({commit}, {list}) {
+    commit(types.SET_PLAYING_RADIO_ID, "") // 随机播放时需要清空radioid
     commit(types.SET_PLAY_MODE, playMode.random)
     commit(types.SET_SEQUENCE_LIST, list)
     let randomList = shuffle(list)
@@ -76,7 +80,7 @@ export const selectPlay = function ({commit, state}, {list, index}) {
               playlist.splice(fpIndex + 1,1)
             }
           }
-
+          commit(types.SET_PLAYING_RADIO_ID, "") 
           commit(types.SET_PLAYLIST, playlist)
           commit(types.SET_SEQUENCE_LIST, sequenceList)
           commit(types.SET_CURRENT_INDEX, currentIndex)

@@ -110,7 +110,6 @@ export default {
           //   alert("此歌曲为收费歌曲，暂时无法播放！")
           //   return 
           // }
-          this.setPlayingRadioId("")
           this.selectPlay({
             list:this.songs,
             index
@@ -124,10 +123,7 @@ export default {
         ...mapActions([
           'selectPlay',
           'randomPlay'
-        ]),
-        ...mapMutations({
-          setPlayingRadioId:'SET_PLAYING_RADIO_ID'
-        })
+        ])
 
     },
     watch:{

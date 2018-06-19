@@ -138,6 +138,7 @@ export default {
   computed:{
       ...mapGetters([
           'playing',
+          'playingRadioId'
       ]),
   },
   methods:{
@@ -210,37 +211,52 @@ export default {
         }
       },
       seclecRadio(item){
-        this.setPlayingRadioId(item.radioId)
         this._getRadioSonglist(item.radioId)
       },
       _getRadioSonglist(radioId){
         if(radioId == 99){ // 个性电台
-          if(this.radioSongs1.length > 0){
-            this.setPlayingState(!this.playing) // 控制播放状态
-            return
+        if(radioId == this.playingRadioId){
+          this.setPlayingState(!this.playing)
+          this.setPlayingRadioId(radioId)
+          return
           }
+          // if(this.radioSongs1.length > 0){
+          //   this.setPlayingState(!this.playing) // 控制播放状态
+          //   return
+          // }
           getPersonalityRadio().then((res)=>{
             if(res.code === ERR_OK){
               this.radioSongs1 = this._normalizeSongs(res.songlist)
               let index = 0
+              let radio = true
+              this.setPlayingRadioId(radioId)
               this.selectPlay({
                   list:this.radioSongs1,
-                  index
+                  index,
+                  radio
               })
             }
           })
         }else{ // 其他电台
-          if(this.radioSongs2.length > 0){
-            this.setPlayingState(!this.playing) // 控制播放状态
+          // if(this.radioSongs2.length > 0){
+          //   this.setPlayingState(!this.playing) // 控制播放状态
+          //   return
+          // }
+          if(radioId == this.playingRadioId){
+            this.setPlayingState(!this.playing)
+            this.setPlayingRadioId(radioId)
             return
           }
           getRadioSonglist(radioId).then((res) => {
             if(res.code === ERR_OK){
               this.radioSongs2 = this._normalizeSongs(res.songlist.data.track_list)
               let index = 0
+              let radio = true
+              this.setPlayingRadioId(radioId)
               this.selectPlay({
                   list:this.radioSongs2,
-                  index
+                  index,
+                  radio
               })
             }
           })
