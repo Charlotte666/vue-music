@@ -2,7 +2,7 @@
     <div class="about">
       <div class="head-wrapper">
         <div class="head" @click="showImage=true" v-model="showImage">
-            <img class="headimg" src="./img/wangjiahuan.jpg" alt="">
+            <img class="headimg" src="./wangjiahuan.jpg" alt="">
         </div>
       </div>
       <div class="name-wrapper">
@@ -75,7 +75,7 @@
       <div v-transfer-dom>
             <x-dialog v-model="showImage" class="dialog-demo" hide-on-blur>
               <div class="img-box">
-                <img src="./img/wangjiahuan.jpg" style="max-width:100%">
+                <img src="./wangjiahuan.jpg" style="max-width:100%">
               </div>
               <x-icon type="ios-close-outline" style="fill:#956d39;" @click="showImage = false"></x-icon>
             </x-dialog>

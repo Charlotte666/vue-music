@@ -16,7 +16,7 @@
           <div class="icon">
             <img width="100" height="100" v-lazy="item.picUrl"/>
             <div class="headset">
-               <img width="15" height="15" src="./img/headset1.png" alt="">
+               <img width="15" height="15" src="./headset1.png" alt="">
                <!-- 判断听过数量是否大于10000 如果大于显示万单位  Math.round四舍五入取整-->
                <span class="count" v-if="item.listenCount >= 10000">{{Math.round(item.listenCount/10000)}}万</span>
                <span class="count" v-if="item.listenCount < 10000">{{item.listenCount}}</span>

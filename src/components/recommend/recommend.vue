@@ -79,7 +79,7 @@
           <div class="radio-list">
             <div class="title-wrapper">
               <h1 class="list-title">精 选 电 台</h1>
-              <i class="new-icon-right" @click="toNew(0,1)"></i>
+              <i class="new-icon-right" @click="toRadio"></i>
             </div>
           </div>
           <recommend-radio :items="radioList" @seclecRadio="seclecRadio"></recommend-radio>

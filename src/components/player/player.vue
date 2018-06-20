@@ -27,7 +27,7 @@
               <div class="cd-wrapper" ref="cdWrapper">
                 <!-- 播放图标 -->
                 <div class="triger" ref="triger" :class="this.playing ? '' : 'pause'">
-                  <img width="90px" height="120px" src="./img/swith.png" alt="">
+                  <img width="90px" height="120px" src="./swith.png" alt="">
                 </div>
                 <div class="cd" :class="cdCls" ref="cd">
                   <img class="image" :src="currentSong.image">
@@ -644,7 +644,7 @@ export default {
               //box-sizing: border-box
               //border: 5px solid rgba(255, 255, 255, 0.1)
               border-radius: 50%
-              background:url('./img/cd.png')
+              background:url('./cd.png')
               background-size:100%
               background-color:rgba(255, 255, 255, 0.1)
               z-index:2
