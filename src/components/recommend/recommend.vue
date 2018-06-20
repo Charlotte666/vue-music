@@ -31,25 +31,38 @@
               <span class="new-span">电台</span>
             </div>
           </div>
-          <div class="new-songs" @click="toNew(0,0)">
-            <div class="new-song" v-show="info1.cover">
-              <img width="58" height="58" v-lazy="info1.cover"/>
-            </div>
-            <div class="info">
-              <div class="song">
-                <span class="title">新歌推荐</span>
-                <span class="text" v-html="info1.title"></span>
+          <div class="new-song-wrapper">
+            <div class="left-wrapper">
+              <div class="new-songs" @click="toNew(0,0)">
+                <div class="new-song" v-show="info1.cover">
+                  <img width="58" height="58" v-lazy="info1.cover"/>
+                </div>
+                <div class="info">
+                  <div class="song">
+                    <span class="title">新歌推荐</span>
+                    <span class="text" v-html="info1.title.substring(5)"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="new-songs" @click="toNew(0,0)">
+                <div class="new-song" v-show="info2.cover">
+                  <img width="58" height="58" v-lazy="info2.cover"/>
+                </div>
+                <div class="info">
+                  <div class="song">
+                    <span class="title">编辑推荐</span>
+                    <span class="text" v-html="info2.title"></span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="new-songs" @click="toNew(0,0)">
-            <div class="new-song" v-show="info2.cover">
-              <img width="58" height="58" v-lazy="info2.cover"/>
-            </div>
-            <div class="info">
-              <div class="song">
-                <span class="title">编辑推荐</span>
-                <span class="text" v-html="info2.title"></span>
+            <div class="box">
+              <!-- <h1 class="title">个性电台</h1>    -->
+              <img class="radioImg" :src="personalRadioList.radioImg">
+              <i class="new-icon-play2" :class="playIcon(personalRadioList.radioId)" @click="seclecRadio(personalRadioList)"></i>
+              <br />
+              <div class="box_ribbon">
+                <span class="text">个性电台</span>
               </div>
             </div>
           </div>
@@ -126,7 +139,8 @@ export default {
         info2:[],
         loading:false,
         radioSongs1:[],
-        radioSongs2:[]
+        radioSongs2:[],
+        personalRadioList:[]
     }
   },
   created(){
@@ -147,6 +161,11 @@ export default {
         path: `/appShow/recommend/${item.dissid}`
       })
       this.setDisc(item)
+    },
+    playIcon(radioId){ // 根绝播放状态显示播放图标
+      if(this.playingRadioId == radioId){
+         return this.playing ? 'new-icon-suspend' : 'new-icon-play2' 
+      }
     },
     toAlbum(item){
       this.$router.push({
@@ -182,6 +201,7 @@ export default {
               if(res.code === ERR_OK){
                 let data = res.recomPlaylist.data.v_hot
                 this.info1 = data[0]
+                console.log(data)
                 this.info2 = data[1]
               }
           })
@@ -196,11 +216,12 @@ export default {
       _getGroupRadioList(){
         getGroupRadioList().then((res) => {
           if(res.code === ERR_OK){
+              this.personalRadioList = res.data.data.groupList[0].radioList[0] // 个性电台
+              console.log(this.personalRadioList)
               res.data.data.groupList[0].radioList.splice(0,1) // 删除个性电台
               let radioList = res.data.data.groupList[0].radioList
               this.radioList = getRandomArrayElements(radioList,6) // 随机截取6个元素
               this.$refs.scroll.refresh()
-              console.log(this.radioList)
           }
         })
       },
@@ -329,6 +350,7 @@ export default {
 
 <style lang="stylus">
  @import "~common/stylus/variable"
+ @import "~common/stylus/mixin"
   .recommend
     position: fixed
     width: 100%
@@ -394,33 +416,108 @@ export default {
           .new-span
             color:$color-text
             font-size :$font-size-small
-      .new-songs
-        display: flex
-        margin: 0 10px
-        padding-top: 10px
-        height: 58px
-        .new-song
-          flex: 0 0 58px
-        .info
-          flex: 1
-          display: flex
-          flex-direction: column
-          justify-content: center
-          padding: 0 15px
-          height: 58px
-          overflow: hidden
-          background: $color-highlight-background
-          color: $color-text-d
-          .song
+      .new-song-wrapper
+        display :flex
+        flex-direction :row
+        margin-right :8px
+        .left-wrapper
+          display :flex
+          flex-direction :column
+          .new-songs
+            display: flex
+            margin: 0 10px
+            padding-top: 10px
+            height: 58px
+            .new-song
+              flex: 0 0 58px
+            .info
+              flex: 1
+              display: flex
+              flex-direction: column
+              justify-content: center
+              padding: 0 15px
+              height: 58px
+              overflow: hidden
+              background: $color-highlight-background
+              color: $color-text-d
+              .song
+                display :flex
+                flex-direction :column
+                line-height: 20px
+                .title
+                  font-size: $font-size-medium-s
+                  color:$color-text
+                .text
+                  no-wrap()
+                  font-size: $font-size-small
+        .box
+          margin: 10px auto
+          width: 100px
+          height: 100px
+          padding: 10px
+          position:relative
+          background: -webkit-gradient(linear, 100% 100%, 50% 10%, from(#333), to(#cccccc), color-stop(.1,#333))
+          border: 1px solid #ccc
+          -webkit-box-shadow: 1px 1px 4px rgba(0,0,0, 0.1)
+          -webkit-border-bottom-right-radius: 60px 5px
+          &:before
+            content: ''
+            width: 98%
+            z-index:-1
+            height: 100%
+            padding: 0 0 1px 0
+            position: absolute
+            bottom:0
+            right:0
+            background: -webkit-gradient(linear, 0% 20%, 0% 92%, from(#333), to(#8a8a8a), color-stop(.1,#333))
+            border: 1px solid #ccc
+            -webkit-box-shadow: 1px 1px 8px rgba(0,0,0, 0.1)
+            -webkit-border-bottom-right-radius: 60px 5px
+            -webkit-transform: skew(2deg,2deg) translate(3px,8px)
+          &:after
+            content: ''
+            width: 98%
+            z-index:-1
+            height: 98%
+            padding: 0 0 1px 0
+            position: absolute
+            bottom:0
+            right:0
+            background: -webkit-gradient(linear, 0% 20%, 0% 100%, from(#cdcdcd), to(#cccccc), color-stop(.1,#333))
+            border: 1px solid #ccc
+            -webkit-box-shadow: 0px 0px 8px rgba(0,0,0, 0.1)
+            -webkit-transform: skew(2deg,2deg) translate(-1px,2px)
+          img
+            width: 100%
+            height:100px
+          .new-icon-play2
+            position absolute
+            font-size :20px
+            top:43%
+            left:45%
+            color:#fff
+          .new-icon-suspend
+            position absolute
+            font-size :25px
+            top:43%
+            left:40%
+            color:#fff
+          .box_ribbon
+            position:absolute
+            top:0
+            left: 0
+            width: 100px
+            height: 40px
+            background: -webkit-gradient(linear, 555% 20%, 0% 92%, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.0)), color-stop(.1,rgba(0, 0, 0, 0.2)))
+            border-left: 1px dashed rgba(0, 0, 0, 0.1)
+            border-right: 1px dashed rgba(0, 0, 0, 0.1)
+            -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2)
+            -webkit-transform: rotate(-30deg) skew(0,0) translate(-30px,-20px)
             display :flex
-            flex-direction :column
-            no-wrap()
-            line-height: 20px
-            .title
-              font-size: $font-size-medium-x
-              color:$color-text-new
+            justify-content :center
+            align-items :center
             .text
-              font-size: $font-size-small
+              color:$color-text
       .recommend-list
         .title-wrapper
           display :flex

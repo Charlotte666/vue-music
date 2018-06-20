@@ -62,21 +62,22 @@
       .item
         margin-right :10px
         margin-left :10px
+        position:relative
         .icon
           margin-bottom :13px
           .image
             border-radius :50%
         .new-icon-play2
-          position relative
+          position absolute
           font-size :20px
-          top:-113px
-          left:53px
+          top:30%
+          left:45%
           color:#fff
         .new-icon-suspend
-          position relative
-          font-size :20px
-          top:-113px
-          left:53px
+          position absolute
+          font-size :25px
+          top:29%
+          left:40%
           color:#fff
         .text
           font-size: $font-size-small

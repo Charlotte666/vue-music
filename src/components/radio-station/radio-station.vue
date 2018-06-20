@@ -318,21 +318,22 @@ export default {
             margin-left :15px
             .radio-item
               margin-right :15px
+              position:relative
               .icon
                 margin-bottom :13px
                 .image
                   border-radius :50%
               .new-icon-play2
-                  position relative
+                  position absolute
                   font-size :20px
-                  top:-133px
-                  left:65px
+                  top:32%
+                  left:46%
                   color:#fff
               .new-icon-suspend
-                  position relative
-                  font-size :20px
-                  top:-133px
-                  left:65px
+                  position absolute
+                  font-size :25px
+                  top:25%
+                  left:42%
                   color:#fff
               .text
                 font-size: $font-size-small
