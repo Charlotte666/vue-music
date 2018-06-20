@@ -72,13 +72,13 @@
           font-size :20px
           top:30%
           left:45%
-          color:#fff
+          color:$color-text
         .new-icon-suspend
           position absolute
           font-size :25px
           top:29%
           left:40%
-          color:#fff
+          color:$color-text
         .text
           font-size: $font-size-small
           text-align :center

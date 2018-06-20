@@ -328,13 +328,13 @@ export default {
                   font-size :20px
                   top:32%
                   left:46%
-                  color:#fff
+                  color:$color-text
               .new-icon-suspend
                   position absolute
                   font-size :25px
                   top:25%
                   left:42%
-                  color:#fff
+                  color:$color-text
               .text
                 font-size: $font-size-small
                 margin-bottom :15px

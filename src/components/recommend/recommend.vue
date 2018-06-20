@@ -495,13 +495,13 @@ export default {
             font-size :20px
             top:43%
             left:45%
-            color:#fff
+            color:$color-text
           .new-icon-suspend
             position absolute
             font-size :25px
             top:43%
             left:40%
-            color:#fff
+            color:$color-text
           .box_ribbon
             position:absolute
             top:0
