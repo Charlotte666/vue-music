@@ -183,8 +183,6 @@ $ npm run build
 ```
 
 
-## License
+## Welcome
 
-The code is available under the [MIT license](https://opensource.org/licenses/MIT).
-
-![](http://oph264zoo.bkt.clouddn.com/17-8-11/10545126.jpg)
+![](https://github.com/MrWangjiahuan/vue-music/blob/master/Screenshots/star.png)
