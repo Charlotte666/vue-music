@@ -2,7 +2,7 @@
 # Love Music
 ![author](https://img.shields.io/badge/author-wangjiahuan-brightgreen.svg) 
 ![version](https://img.shields.io/badge/version-v1.0.0-ff69b4.svg) 
-[ ![language English](https://img.shields.io/badge/language-English-feb252.svg)](https://github.com/MrWangjiahuan/vue-music/blob/master/README.en.md)
+[![language English](https://img.shields.io/badge/language-English-feb252.svg)](https://github.com/MrWangjiahuan/vue-music/blob/master/README.en.md)
 
 👉 项目演示地址1: http://wangjiahuan.top 
 
