@@ -1,5 +1,7 @@
 
 # Love Music
+[![version](https://img.shields.io/badge/Download-v1.0.3-ff69b4.svg) ](http://www.devio.org/io/GitHubPopular/)
+[ ![language English](https://img.shields.io/badge/language-English-feb252.svg)](https://github.com/MrWangjiahuan/vue-music/blob/master/README.en.md)
 
 👉 项目演示地址1: http://wangjiahuan.top 
 
