@@ -3,11 +3,11 @@
 ![version](https://img.shields.io/badge/version-v1.0.0-ff69b4.svg) 
 [ ![语言 中文](https://img.shields.io/badge/语言-中文-orange.svg)](https://github.com/MrWangjiahuan/vue-music)
 
-👉 项目演示地址1: http://wangjiahuan.top 
+👉 Project demo address 1: http://wangjiahuan.top 
 
-👉 项目演示地址2: http://www.wangjiahuan.top
+👉 Project demo address 2: http://www.wangjiahuan.top
 
-基于 **Vue 全家桶 (2.x)** 制作的 ，一个自己独立开发的媲美原生的移动端音乐 App，项目完整、功能完备、UI美观、交互一流。
+Based on the **Vue family barrel (2.x)** made, an independent development of the original mobile end of the mobile end of music App, complete project, complete function, UI beautiful, interactive first class.
 
 ![图片预览](https://github.com/MrWangjiahuan/vue-music/blob/master/Screenshots/1.png)
 ![图片预览](https://github.com/MrWangjiahuan/vue-music/blob/master/Screenshots/2.png)
@@ -19,154 +19,154 @@
 ![图片预览](https://github.com/MrWangjiahuan/vue-music/blob/master/Screenshots/6.png)
 
 
-## 技术栈
+## technology stack
 
-【前端】
+【Front end】
 
-- `Vue`：用于构建用户界面的 MVVM 框架。它的核心是**响应的数据绑定**和**组系统件**
-- `vue-router`：为单页面应用提供的路由系统，项目上线前使用了 `Lazy Loading Routes` 技术来实现异步加载优化性能
-- `vuex`：Vue 集中状态管理，在多个组件共享某些状态时非常便捷
-- `vue-lazyload`：第三方图片懒加载库，优化页面加载速度
-- `vux`：基于 WeUI 和 Vue.js 的 移动端 UI 组件库,提供丰富的组件满足移动端(微信)页面常用业务需求
-- `better-scroll`：iscroll 的优化版，使移动端滑动体验更加流畅
-- `stylus and less`：css 预编译处理器
-- `ES6`：ECMAScript 新一代语法，模块化、解构赋值、Promise、Class 等方法非常好用
+- `Vue`：The MVVM framework used to build a user interface. Its core is ** response data binding ** and ** group system **
+- `vue-router`：The routing system provided for single page application is used before the project is launched `Lazy Loading Routes` technology to achieve asynchronous loading optimization
+- `vuex`：Vue centralized state management is very convenient when multiple components share certain states
+- `vue-lazyload`：Third party picture lazy loading library, optimize page loading speed
+- `vux`：The mobile terminal UI component library based on WeUI and Vue.js provides rich components to meet the common business needs of mobile terminals (WeChat) pages.
+- `better-scroll`：Optimized version of iscroll enables mobile terminal to slide more smoothly.
+- `stylus and less`：CSS precompiler
+- `ES6`：ECMAScript new generation of grammar, modularity, deconstruction assignment, Promise, Class and other methods are very good.
 
-【后端】
+【back-end】
 
-- `Node.js`：利用 Express 起一个本地测试服务器
-- `jsonp`：服务端通讯。抓取 QQ音乐数据
-- `axios`：服务端通讯。结合 Node.js 代理后端请求，抓取 QQ音乐数据
+- `Node.js`：Using Express to serve as a local test server
+- `jsonp`：Server-side communication. Grab QQ music data
+- `axios`：Server-side communication. Combining Node.js agent backend request to grab QQ music data
 
 【自动化构建及其他工具】
 
-- `vue-cli`：Vue 脚手架工具，快速初始化项目代码
-- `webpack`：是一款模块加载器兼打包工具,它能把各种资源,例如JS(含JSX)、coffee、样式(含less/sass/stylus)、图片等都作为模块来使用和处理。
-- `eslint`：代码风格检查工具，规范代码书写(该项目暂时注释掉)
-- `vConsole`：移动端调试工具，在移动端输出日志
+- `vue-cli`：Vue scaffolding tools, quick initialization of project code
+- `webpack`：It is a module loader and packaging tool that can use and process resources such as JS (including JSX), coffee, style (including less/sass/stylus), and pictures as modules.
+- `eslint`：Code style checking tool, specification code writing (the item is temporarily annotated)
+- `vConsole`：Mobile end debugger, log on the mobile end
 
 
-## 收获
+## Harvest
 
-1. 总结了一套 Vue 通用组件，可以在其它项目中复用的 15+ 个基础组件、25+ 个业务组件
-2. 总结了一套常用的 `stylus mixin` 库
-3. 总结了一套常用的 `JS` 工具函数库
-4. 体会到组件化、模块化开发带来的便捷
-5. 体会到将对象封装成类 `ES6 class` 的便捷性，以及利用工厂方式初始化类实例
-6. 学会利用 `js` 编写过渡效果及动画效果制作良好的用户交互体验
-7. 学会怎么使用方便的组件库进行开发，例如 `vux的tab和swiper`
+1. A set of Vue generic components that can reuse 15+ basic components and 25+ business components in other projects is summarized.
+2. A set of common `stylus mixin` libraries is summarized
+3. A common set of `JS` tool functions is summarized.
+4. Realize the convenience brought by component-based and modular development.
+5. Realize the convenience of encapsulating objects into `ES6 class`, and initialize class instances in factory mode.
+6. Learn to write transitional effects and animation effects using `js` to create a good user interaction experience.
+7. Learn how to use convenient component libraries for development, such as `vux's tab and swiper`.
 
 
 ## TODO
 
-1. 数据全部来自 QQ 音乐，接口改变了可能就要修改 `jsonp` 和 `axios` 代码
-2. 我会不断优化页面体验
+1. All data comes from QQ music. If interface changes, `jsonp` and `axios` code may be modified.
+2. I will constantly optimize the page experience
 
-## 实现细节
+## Implement details
 
-主要页面：播放器内核页、(首页)推荐页、歌单详情页、歌手页、歌手详情页、新歌页面、专辑页面、简介页面、排行页、搜索页、添加歌曲页、个人中心页等。
+Main pages: the player kernel page, (home page) recommendation page, singsong detail page, singer page, singer detail page, new song page, album page, introduction page, rankings page, search page, song page, personal center page, etc.
 
-核心页面：播放器内核页,首页,歌手页面,新歌页面
+Core page: player kernel page, home page, singer page, new song page
 
-**组件树**
+**Component tree**
 
 ```
-<app> ................... 根组件
-  <player> .............. 全局的播放器内核组件
-  <header> .............. 头部组件
-  <router-view> ......... 路由
-    <recommend> ......... 推荐页(音乐馆)
-    <singer> ............ 歌手页
-    <rank> .............. 排行页
-    <type> .............. 分类歌单页
-    <radio-station> ..... 电台页
-    <search> ............ 搜索页
-    <user-center> ....... 个人中心页
-    <about> ............. 关于页
+<app> ................... Root component
+  <player> .............. Global player kernel components
+  <header> .............. Head component
+  <router-view> ......... Route
+    <recommend> ......... Recommendation page (Music Hall)
+    <singer> ............ Singer page
+    <rank> .............. Rankings page
+    <type> .............. Classified sheet page
+    <radio-station> ..... Radio page
+    <search> ............ Search page
+    <user-center> ....... Personal center page
+    <about> ............. About page
 ```
 
-**推荐页（音乐馆）**
+**Recommendation page (Music Hall)**
 
-上部分是一个轮播图组件，使用第三方库 `better-scroll` 辅助实现，使用 `jsonp` 抓取 QQ音乐(移动端)数据
+The above part is a carousel chart component, which is implemented by using the third party library `better-scroll`, and uses the `jsonp` to grab the QQ music (mobile end) data.
 
-下部分是一个歌单推荐列表，使用 `axios + Node.js` 代理后端请求，绕过主机限制 (伪造 headers)，抓取 QQ音乐(PC端)数据
+The next part is a list of singer recommendation, using the `axios + Node.js` proxy back end request, bypassing the host limit (forged headers), and grabbing the QQ music (PC) data
 
-歌单推荐列表图片，使用图片懒加载技术 `vue-lazyload`，优化页面加载速度
+Song list recommended list of pictures, using picture lazy loading technology `vue-lazyload`, optimize page loading speed.
 
-为了更好的用户体验，当数据未请求到时，显示 `loading` 组件
+For better user experience, the `loading` component is displayed when data is not requested.
 
-**歌手页**
+**Singer page**
 
-左右联动是这个组件的难点
+The left and right linkage is the difficulty of this component
 
-左侧是一个歌手列表，使用 `jsonp` 抓取 QQ音乐(PC端)歌手数据并重组 JSON 数据结构
+On the left is a list of singers, using `jsonp` to grab QQ music (PC end) singer data and restructure JSON data structure.
 
-列表图片使用懒加载技术 `vue-lazyload`，优化页面加载速度
+List pictures using lazy loading technology `vue-lazyload` to optimize page loading speed.
 
-右侧是一个字母列表，与左侧歌手列表联动，滚动固定标题实现
+On the right is an alphabet list, linked to the left singer list, and the rolling fixed heading is implemented.
 
-**电台页**
+**Radio page**
 
-实现和歌手页差不多
+The realization is about the same as the singer page
 
-**分类歌单页**
+**Classified sheet page**
 
-上部分为选择的分类名称
+The upper part is the selected classification name
 
-下部分为每个分类下的歌单
+The next part is the song list under each category
 
-实现很容易
+It's easy to implement
 
-**播放器内核页**
+**Player kernel page**
 
-核心组件。用 `vuex` 管理各种播放时状态，播放、暂停等功能调用 [audio API](http://www.w3school.com.cn/tags/html_ref_audio_video_dom.asp)
+Core components. Use `vuex` to manage various playback status, play, pause and other function calls [audio API](http://www.w3school.com.cn/tags/html_ref_audio_video_dom.asp)
 
-播放器可以最大化和最小化
+The player can be maximized and minimized
 
-中部唱片动画使用第三方 JS 动画库 `create-keyframe-animation` 实现
+Central record animation uses the third party JS animation library `create-keyframe-animation`.
 
-底部操作区图标使用 `iconfonts`。
+The bottom operation area icon uses `iconfonts`.
 
-抽象了一个横向进度条组件和一个圆形进度条组件，横向进度条可以拖动小球和点击进度条来改变播放进度，圆形进度条组件使用 SVG `<circle>` 元素
+A lateral progress bar component and a circular progress bar component are abstracted. The lateral progress bar can drag the ball and click progress bar to change the playback progress. The circular progress bar component uses the SVG `<circle>` element
 
-播放模式有：顺序播放、单曲循环、随机播放，原理是调整歌单列表数组
+The playback modes are sequential play, single cycle and random play. The principle is to adjust the list of Songs List.
 
-歌词的爬取利用 `axios` 代理后端请求，伪造 `headers` 来实现，先将歌词 jsonp 格式转换为 json 格式，再使用第三方库 [`js-base64`](https://github.com/dankogai/js-base64) 进行 Base64 解码操作，最后再使用第三方库 [`lyric-parser`](https://github.com/ustbhuangyi/lyric-parser)对歌词进行格式化
+Lyrics crawl takes advantage of the `axios` agent's back-end request and forgeries `headers` to convert the lyrics jsonp format to JSON format, and then use the third party library [`js-base64`](https://github.com/dankogai/js-base64) base64 decoding operation, and finally use the third party library [`lyric-parser`](https://github.com/ustbhuangyi/lyric-parser) formatting the lyrics
 
-实现了侧滑显示歌词、歌词跟随进度条高亮等交互效果
+It achieves the interactive effect of sideslip display, lyrics, and progress bar highlighting.
 
-增加了当前播放列表组件，可在其中加入/删除歌曲
+Added the current playlist component to which you can add / delete songs.
 
-**排行页**
+**Rankings page**
 
-普通组件
+Common component
 
 
-**搜索页**
+**Search page**
 
-抓数据，写组件，另外，根据抓取的数据特征，做了上拉刷新的功能
+Grasping data, writing components, and doing the function of pull-up and refreshing according to the characteristics of data captured.
 
-考虑到数据量大且频繁的问题，对请求做了节流处理
+Considering the problem of large and frequent data, the request is throttled.
 
-考虑到移动端键盘占屏的问题，对滚动前的 `input` 做了 `blur()` 操作
+Taking account of the problem of mobile terminal keyboard occupation, `blur () operation of `input` before rolling is done.
 
-对搜索历史进行了 `localstorage` 缓存，清空搜索历史时使用了改装过的 `confirm` 组件
+`localstorage` cache was used for search history, and modified `confirm` components were used to empty search history.
 
-支持将搜索的歌曲添加到播放列表
+Support to add search songs to the playlist
 
-**个人中心**
+**Personal Center**
 
-将 `localstorage` 中 “我的收藏” 和 “最近播放” 反映到界面上
+The "Favorites" and "recent playback" in `localstorage` are reflected on the interface.
 
-**其他**
+**Other**
 
-此应用的全部数据来自 QQ音乐
+The whole data of this application comes from QQ music
 
-全局通用的应用级状态使用 `vuex` 集中管理
+Global general application level state using `vuex` centralized management
 
-全局引入 `fastclick` 库，消除 click 移动浏览器300ms延迟
+`fastclick` library is introduced globally to eliminate click mobile browser 300ms delay.
 
-页面是响应式的，适配常见的移动端屏幕，采用 `flex` 布局
+The page is responsive, adaptable to the common mobile terminal screen, using `flex` layout.
 
 ## Build Setup
 
