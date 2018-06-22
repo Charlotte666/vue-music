@@ -1,7 +1,7 @@
 # GitHubPopular
-
-[![version](https://img.shields.io/badge/Download-v1.0.3-ff69b4.svg) ]
-[ ![language English](https://img.shields.io/badge/language-English-feb252.svg)]
+![author](https://img.shields.io/badge/author-wangjiahuan-brightgreen.svg) 
+![version](https://img.shields.io/badge/version-v1.0.0-ff69b4.svg) 
+[ ![语言 中文](https://img.shields.io/badge/语言-中文-orange.svg)](https://github.com/MrWangjiahuan/vue-music)
 
 This is a GitHub most popular repositories viewer with React Native.  
 
