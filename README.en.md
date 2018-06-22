@@ -1,8 +1,7 @@
 # GitHubPopular
 
-![Download](https://img.shields.io/badge/author-wangjiahuan-brightgreen.svg)
-![PRs Welcome](https://img.shields.io/badge/version-v1.0.0-ff69b4.svg)
-![语言 中文](https://img.shields.io/badge/%E8%AF%AD%E8%A8%80-%E4%B8%AD%E6%96%87-orange.svg)
+[![version](https://img.shields.io/badge/Download-v1.0.3-ff69b4.svg) ]
+[ ![language English](https://img.shields.io/badge/language-English-feb252.svg)]
 
 This is a GitHub most popular repositories viewer with React Native.  
 
