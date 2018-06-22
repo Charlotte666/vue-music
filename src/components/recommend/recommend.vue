@@ -40,7 +40,7 @@
                 <div class="info">
                   <div class="song">
                     <span class="title">新歌推荐</span>
-                    <span class="text" v-html="info1.title.substring(5)"></span>
+                    <span class="text" v-html="subTitle(info1.title)" ></span>
                   </div>
                 </div>
               </div>
@@ -56,15 +56,14 @@
                 </div>
               </div>
             </div>
-            <div class="box">
-              <!-- <h1 class="title">个性电台</h1>    -->
+            <!-- <div class="box">
               <img class="radioImg" :src="personalRadioList.radioImg">
               <i class="new-icon-play2" :class="playIcon(personalRadioList.radioId)" @click="seclecRadio(personalRadioList)"></i>
               <br />
               <div class="box_ribbon">
                 <span class="text">个性电台</span>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="recommend-list">
             <div class="title-wrapper">
@@ -162,6 +161,14 @@ export default {
       })
       this.setDisc(item)
     },
+    subTitle(title){
+      if(title){
+        return title.substring(5)
+      }else{
+        return ''
+      }
+      
+    },
     playIcon(radioId){ // 根绝播放状态显示播放图标
       if(this.playingRadioId == radioId){
          return this.playing ? 'new-icon-suspend' : 'new-icon-play2' 
@@ -173,9 +180,12 @@ export default {
       })
     },
      handlePlaylist(playlist){
-          const bottom = playlist.length > 0 ? '60px' : '' //播放器高度加上原有bottom 等于148
-          this.$refs.recommend.style.bottom = bottom
-          this.$refs.scroll.refresh()
+          if(playlist.length > 0 ){
+            const bottom = playlist.length > 0 ? '60px' : '' //播放器高度加上原有bottom 等于148
+            this.$refs.recommend.style.bottom = bottom
+            this.$refs.scroll.refresh()
+          }
+          
     },
       _getRecommend(){
           getRecommend().then((res) => {
@@ -201,7 +211,6 @@ export default {
               if(res.code === ERR_OK){
                 let data = res.recomPlaylist.data.v_hot
                 this.info1 = data[0]
-                console.log(data)
                 this.info2 = data[1]
               }
           })
@@ -209,7 +218,7 @@ export default {
          getNewList(2,0,7).then((res) => {
               if(res.code === ERR_OK){
                 this.newAlbumList = res.new_album.data.list.slice(0,6) // 截取前6个元素
-                this.$refs.scroll.refresh()
+                // this.$refs.scroll.refresh()
               }
           })
       },
@@ -217,11 +226,10 @@ export default {
         getGroupRadioList().then((res) => {
           if(res.code === ERR_OK){
               this.personalRadioList = res.data.data.groupList[0].radioList[0] // 个性电台
-              console.log(this.personalRadioList)
               res.data.data.groupList[0].radioList.splice(0,1) // 删除个性电台
               let radioList = res.data.data.groupList[0].radioList
               this.radioList = getRandomArrayElements(radioList,6) // 随机截取6个元素
-              this.$refs.scroll.refresh()
+              // this.$refs.scroll.refresh()
           }
         })
       },
@@ -241,10 +249,6 @@ export default {
           this.setPlayingRadioId(radioId)
           return
           }
-          // if(this.radioSongs1.length > 0){
-          //   this.setPlayingState(!this.playing) // 控制播放状态
-          //   return
-          // }
           getPersonalityRadio().then((res)=>{
             if(res.code === ERR_OK){
               this.radioSongs1 = this._normalizeSongs(res.songlist)
@@ -259,10 +263,6 @@ export default {
             }
           })
         }else{ // 其他电台
-          // if(this.radioSongs2.length > 0){
-          //   this.setPlayingState(!this.playing) // 控制播放状态
-          //   return
-          // }
           if(radioId == this.playingRadioId){
             this.setPlayingState(!this.playing)
             this.setPlayingRadioId(radioId)
@@ -419,10 +419,11 @@ export default {
       .new-song-wrapper
         display :flex
         flex-direction :row
-        margin-right :8px
+        // margin-right :8px
         .left-wrapper
           display :flex
           flex-direction :column
+          flex:1
           .new-songs
             display: flex
             margin: 0 10px
@@ -448,7 +449,6 @@ export default {
                   font-size: $font-size-medium-s
                   color:$color-text
                 .text
-                  no-wrap()
                   font-size: $font-size-small
         .box
           margin: 10px auto

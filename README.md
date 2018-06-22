@@ -1,11 +1,11 @@
 
-# 移动端音乐 WebApp
+# Love Music
 
 👉 项目演示地址1: http://wangjiahuan.top 
 
 👉 项目演示地址2: http://www.wangjiahuan.top
 
-基于 **Vue 全家桶 (2.x)** 制作的移动端音乐 WebApp ，一个自己独立开发的媲美原生的移动端音乐 App，项目完整、功能完备、UI美观、交互一流。
+基于 **Vue 全家桶 (2.x)** 制作的 ，一个自己独立开发的媲美原生的移动端音乐 App，项目完整、功能完备、UI美观、交互一流。
 
 ![图片预览](http://oph264zoo.bkt.clouddn.com/17-8-11/52879457.jpg)
 
@@ -26,8 +26,8 @@
 【后端】
 
 - `Node.js`：利用 Express 起一个本地测试服务器
-- `jsonp`：服务端通讯。抓取 QQ音乐(移动端)数据
-- `axios`：服务端通讯。结合 Node.js 代理后端请求，抓取 QQ音乐(PC端)数据
+- `jsonp`：服务端通讯。抓取 QQ音乐数据
+- `axios`：服务端通讯。结合 Node.js 代理后端请求，抓取 QQ音乐数据
 
 【自动化构建及其他工具】
 
@@ -39,7 +39,7 @@
 
 ## 收获
 
-1. 总结了一套 Vue 通用组件，可以在其它项目中复用的 10+ 个基础组件、15+ 个业务组件
+1. 总结了一套 Vue 通用组件，可以在其它项目中复用的 15+ 个基础组件、25+ 个业务组件
 2. 总结了一套常用的 `stylus mixin` 库
 3. 总结了一套常用的 `JS` 工具函数库
 4. 体会到组件化、模块化开发带来的便捷
@@ -50,7 +50,7 @@
 
 ## TODO
 
-1. 歌曲数据全部来自 QQ 音乐，接口改变了可能就要修改 `jsonp` 和 `axios` 代码
+1. 数据全部来自 QQ 音乐，接口改变了可能就要修改 `jsonp` 和 `axios` 代码
 
 ## 实现细节
 
@@ -62,17 +62,20 @@
 
 ```
 <app> ................... 根组件
-  <my-player> ........... 全局的播放器内核组件
-  <my-header> ........... 头部组件
-  <my-tab> .............. 导航栏组件
+  <player> .............. 全局的播放器内核组件
+  <header> .............. 头部组件
   <router-view> ......... 路由
-    <recommend> ......... 推荐页
+    <recommend> ......... 推荐页(音乐馆)
     <singer> ............ 歌手页
     <rank> .............. 排行页
+    <type> .............. 分类歌单页
+    <radio-station> ..... 电台页
     <search> ............ 搜索页
+    <user-center> ....... 个人中心页
+    <about> ............. 关于页
 ```
 
-**推荐页**
+**推荐页（音乐馆）**
 
 上部分是一个轮播图组件，使用第三方库 `better-scroll` 辅助实现，使用 `jsonp` 抓取 QQ音乐(移动端)数据
 
@@ -160,7 +163,7 @@
 
 ``` bash
 # clone the repo into your disk.
-$ git clone https://github.com/bxm0927/music-app.git
+$ git clone https://github.com/MrWangjiahuan/vue-music.git
 
 # install dependencies
 $ npm install
