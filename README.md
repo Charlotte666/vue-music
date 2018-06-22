@@ -7,7 +7,7 @@
 
 基于 **Vue 全家桶 (2.x)** 制作的 ，一个自己独立开发的媲美原生的移动端音乐 App，项目完整、功能完备、UI美观、交互一流。
 
-![图片预览](http://oph264zoo.bkt.clouddn.com/17-8-11/52879457.jpg)
+![图片预览](https://github.com/MrWangjiahuan/vue-music/blob/master/Screenshots/1.png)
 
 
 ## 技术栈
