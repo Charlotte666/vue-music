@@ -2,7 +2,7 @@
 
 [![Download](https://img.shields.io/badge/author-wangjiahuan-brightgreen.svg) ](http://www.devio.org/io/GitHubPopular/)
 [ ![PRs Welcome](https://img.shields.io/badge/version-v1.0.0-ff69b4.svg)](https://github.com/crazycodeboy/GitHubPopular/pulls)[ ![GitHubPopular release](https://img.shields.io/github/release/crazycodeboy/GitHubPopular.svg?maxAge=2592000?style=flat-square)](https://github.com/crazycodeboy/GitHubPopular/releases)
-[ ![语言 中文](https://img.shields.io/badge/%E8%AF%AD%E8%A8%80-%E4%B8%AD%E6%96%87-orange.svg)]
+![语言 中文](https://img.shields.io/badge/%E8%AF%AD%E8%A8%80-%E4%B8%AD%E6%96%87-orange.svg)
 
 This is a GitHub most popular repositories viewer with React Native.  
 
