@@ -3,9 +3,16 @@
 ![version](https://img.shields.io/badge/version-v1.0.0-ff69b4.svg) 
 [ ![语言 中文](https://img.shields.io/badge/语言-中文-orange.svg)](https://github.com/MrWangjiahuan/vue-music)
 
+(It can be a direct scavenging experience)
+
+👉 QR code: ![图片预览](https://github.com/MrWangjiahuan/vue-music/blob/master/Screenshots/1.png)
+
+(At the PC side, please look at the browser's mobile mode)
+
 👉 Project demo address 1: http://wangjiahuan.top 
 
 👉 Project demo address 2: http://www.wangjiahuan.top
+
 
 Based on the **Vue family barrel (2.x)** made, an independent development of the original mobile end of the mobile end of music App, complete project, complete function, UI beautiful, interactive first class.
 
@@ -38,7 +45,7 @@ Based on the **Vue family barrel (2.x)** made, an independent development of the
 - `jsonp`：Server-side communication. Grab QQ music data
 - `axios`：Server-side communication. Combining Node.js agent backend request to grab QQ music data
 
-【自动化构建及其他工具】
+【Automated construction and other tools】
 
 - `vue-cli`：Vue scaffolding tools, quick initialization of project code
 - `webpack`：It is a module loader and packaging tool that can use and process resources such as JS (including JSX), coffee, style (including less/sass/stylus), and pictures as modules.
