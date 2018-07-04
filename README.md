@@ -4,9 +4,9 @@
 ![version](https://img.shields.io/badge/version-v1.0.0-ff69b4.svg) 
 [![language English](https://img.shields.io/badge/language-English-feb252.svg)](https://github.com/MrWangjiahuan/vue-music/blob/master/README.en.md)
 
+建议直接扫码体验！
 
 ![图片预览](https://github.com/MrWangjiahuan/vue-music/blob/master/Screenshots/code.png)
-(可以直接扫码体验哦)
 
 👉 项目演示地址1: http://wangjiahuan.top (PC端请在浏览器的移动模式下查看)
 
