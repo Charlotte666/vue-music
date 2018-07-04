@@ -3,7 +3,7 @@
 ![version](https://img.shields.io/badge/version-v1.0.0-ff69b4.svg) 
 [ ![语言 中文](https://img.shields.io/badge/语言-中文-orange.svg)](https://github.com/MrWangjiahuan/vue-music)
 
-Suggest a direct scavenging experience!
+**Suggest a direct scavenging experience!**
 
 ![图片预览](https://github.com/MrWangjiahuan/vue-music/blob/master/Screenshots/code.png)
 
