@@ -23,7 +23,6 @@
 ![图片预览](https://github.com/MrWangjiahuan/vue-music/blob/master/Screenshots/5.png)
 ![图片预览](https://github.com/MrWangjiahuan/vue-music/blob/master/Screenshots/6.png)
 
-
 ## 技术栈
 
 【前端】

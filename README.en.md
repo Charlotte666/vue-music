@@ -3,7 +3,8 @@
 ![version](https://img.shields.io/badge/version-v1.0.0-ff69b4.svg) 
 [ ![语言 中文](https://img.shields.io/badge/语言-中文-orange.svg)](https://github.com/MrWangjiahuan/vue-music)
 
-👉 QR code: (It can be a direct scavenging experience)
+Suggest a direct scavenging experience!
+
 ![图片预览](https://github.com/MrWangjiahuan/vue-music/blob/master/Screenshots/code.png)
 
 👉 Project demo address 1: http://wangjiahuan.top (At the PC side, please look at the browser's mobile mode)
