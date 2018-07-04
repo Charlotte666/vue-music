@@ -4,15 +4,12 @@
 ![version](https://img.shields.io/badge/version-v1.0.0-ff69b4.svg) 
 [![language English](https://img.shields.io/badge/language-English-feb252.svg)](https://github.com/MrWangjiahuan/vue-music/blob/master/README.en.md)
 
-(可以直接扫码体验哦)
+👉 二维码: (可以直接扫码体验哦)
+![图片预览](https://github.com/MrWangjiahuan/vue-music/blob/master/Screenshots/code.png)
 
-👉 二维码: ![图片预览](https://github.com/MrWangjiahuan/vue-music/blob/master/Screenshots/1.png)
+👉 项目演示地址1: http://wangjiahuan.top (PC端请在浏览器的移动模式下查看)
 
-(PC端请在浏览器的移动模式下查看)
-
-👉 项目演示地址1: http://wangjiahuan.top 
-
-👉 项目演示地址2: http://www.wangjiahuan.top
+👉 项目演示地址2: http://www.wangjiahuan.top (PC端请在浏览器的移动模式下查看)
 
 基于 **Vue 全家桶 (2.x)** 制作的 ，一个自己独立开发的媲美原生的移动端音乐 App，项目完整、功能完备、UI美观、交互一流。
 
